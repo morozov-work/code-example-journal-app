@@ -1,0 +1,25 @@
+/* Ширина */
+.v-navigation-drawer__content::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Трек */
+.v-navigation-drawer__content::-webkit-scrollbar-track {
+  background: #EA5409;
+}
+
+/* Полоса */
+.v-navigation-drawer__content::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+  border-radius: 2px;
+}
+
+/* Полоса при ховере */
+.v-navigation-drawer__content::-webkit-scrollbar-thumb:hover {
+  background: #F4F4F4;
+}
+
+// .v-navigation-drawer__border {
+//   background-color: #EA5409 !important;
+//   width: 2px !important;
+// }

@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+// @font-face {
+//   font-family: "Raleway";
+//   src: url("/assets/fonts/Raleway-Regular.ttf") format('truetype') "";
+//   font-style: normal;
+//   font-weight: normal;
+// }
+
+$body-font-family: "Raleway", sans-serif;
+$heading-font-family: "Raleway", sans-serif;
+$font-size-root: 14px;
+
+$border-radius-root: 25px;
+
+$btn-border-radius: none;
+
+$expansion-panel-border-radius: none;
+$expansion-panel-header-font-size: 1rem;
+$expansion-panel-text-color: #FFFFFF !important;
+$expansion-panel-content-padding: 0 0 15px 0;
+$expansion-panel-header-padding: 17px 20px 17px 24px;

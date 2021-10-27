@@ -7,12 +7,6 @@
         </li>
         <li class="main-menu__list__item">
           <div>
-            <img src="../../assets/icons/main_menu/main.svg" alt="" />
-            <span>Журналы</span>
-          </div>
-        </li>
-        <li class="main-menu__list__item">
-          <div>
             <span>Организации</span>
           </div>
         </li>
