@@ -7,14 +7,17 @@
     app
   >
     <v-col>
-      <v-row><v-btn @click="toogleNavigationExpanded"></v-btn></v-row>
+      <v-row>
+        <v-btn @click="toogleNavigationExpanded">expand</v-btn>
+        <v-btn @click="$router.push({ name: 'NotFound' })">test route</v-btn>
+      </v-row>
       <navigation-list></navigation-list>
     </v-col>
   </v-navigation-drawer>
 </template>
 
 <script>
-import NavigationList from "@/components/navigationList/NavigationList.vue";
+import NavigationList from "@/components/NavigationList/NavigationList.vue";
 
 import { mapGetters, mapActions } from "vuex";
 import { navigation as navigationSettings } from "@/util/constants";

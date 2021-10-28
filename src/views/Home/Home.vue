@@ -1,40 +1,61 @@
 <template>
-  <div class="home">
-    <div class="main-menu">
-      <ul class="main-menu__list">
-        <li class="main-menu__list__item">
-          <div>Главная</div>
-        </li>
-        <li class="main-menu__list__item">
-          <div>
-            <span>Организации</span>
-          </div>
-        </li>
-        <li class="main-menu__list__item">
-          <div>
-            <span>пользователи</span>
-          </div>
-        </li>
-        <li class="main-menu__list__item">
-          <div>
-            <span>оповещения</span>
-          </div>
-        </li>
-        <li class="main-menu__list__item">
-          <div>
-            <span>Отладка</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <v-app>
+    <v-app-bar :style="{ left: viewportShift }" app></v-app-bar>
+    <navigation></navigation>
+    <v-main :style="{ 'padding-left': viewportShift }">
+      <v-container fluid>
+        <v-layout wrap>
+          <v-card
+            :style="{ margin: '0 20px 20px 0' }"
+            v-for="(journal, index) in journals"
+            :key="index"
+            width="350"
+            height="207"
+          >
+            {{ journal }}
+          </v-card>
+        </v-layout>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-// @ is an alias to /src
-
+import Navigation from "@/components/Navigation/Navigation.vue";
+import { mapGetters } from "vuex";
 export default {
+  components: { Navigation },
   name: "Home",
-  components: {},
+
+  data: () => ({
+    showNav: true,
+    navItems: [
+      "Журналы",
+      "Организации",
+      "пользователи",
+      "оповещения",
+      "Отладка",
+    ],
+    journals: [
+      "Температура и влажность помещения",
+      "Температура сотрудников",
+      "Дезинсекция и дератизация",
+      "Дезинфицирующие средства и дезинфекционные работы",
+      "Скоропортящаяся пищевая продукция",
+      "Температурный режим холодильного оборудования",
+      "Температура и влажность склада",
+      "Дефростация продуктов",
+      "Фритюрные жиры",
+      "Бракеражный журнал",
+      "Гигиенический журнал здоровья",
+      "Бактерицидная установка",
+    ],
+  }),
+
+  computed: {
+    ...mapGetters("layout", {
+      viewportShift: ["GET_VIEWPORT_SHIFT"],
+    }),
+  },
 };
 </script>

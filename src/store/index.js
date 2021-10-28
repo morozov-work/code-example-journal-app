@@ -4,6 +4,25 @@ import { navigation } from "@/util/constants";
 
 Vue.use(Vuex);
 
+const auth = {
+  name: auth,
+  namespaced: true,
+  state: () => ({
+    AUTH: false,
+  }),
+  mutations: {
+    SET_AUTHORIZED: (state) => (state.AUTH = true),
+    SET_UNAUTHORIZED: (state) => (state.AUTH = false),
+  },
+  actions: {
+    AUTHORIZE: ({ commit }) => commit("SET_AUTHORIZED"),
+    UNAUTHORIZE: ({ commit }) => commit("SET_UNAUTHORIZED"),
+  },
+  getters: {
+    GET_AUTH: (state) => state.AUTH,
+  },
+};
+
 const layout = {
   name: layout,
   namespaced: true,
@@ -40,6 +59,7 @@ const layout = {
 
 export default new Vuex.Store({
   modules: {
-    layout: layout,
+    auth,
+    layout,
   },
 });

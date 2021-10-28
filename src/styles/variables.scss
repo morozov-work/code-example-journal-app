@@ -10,12 +10,26 @@ $body-font-family: "Raleway", sans-serif;
 $heading-font-family: "Raleway", sans-serif;
 $font-size-root: 14px;
 
+// System Colors
+$primary:       #F45A0C !important;
+$primary-hover: #EA5409 !important;
+$secondary:     #2A486E !important;
+$white:         #FFFFFF !important;
+$black:         #2B2B2B !important;
+$gray:          #6F6E6E !important;
+$gray-light:    #F4F4F4 !important;
+
 $border-radius-root: 25px;
+$box-shadow-root: 0px 4px 20px rgba(0, 0, 0, 0.1) !important; //custom
 
 $btn-border-radius: none;
 
+$text-field-border-radius: 8px;
+
 $expansion-panel-border-radius: none;
 $expansion-panel-header-font-size: 1rem;
-$expansion-panel-text-color: #FFFFFF !important;
 $expansion-panel-content-padding: 0 0 15px 0;
 $expansion-panel-header-padding: 17px 20px 17px 24px;
+
+// Navigation panel
+$navigation-panel-text-color: #FFFFFF !important;

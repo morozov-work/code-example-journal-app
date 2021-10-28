@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.card-404 {
+  margin: auto;
+
+  &__title {
+    font-size: 120px !important;
+    font-weight: 700 !important;
+    color: $primary;
+    line-height: normal !important;
+
+    p {
+      margin: 0 auto;
+    }
+  }
+  
+  &__subtitle {
+    display: flex;
+    font-size: 60px !important;
+    font-weight: 500 !important;
+    color: $primary;
+    line-height: normal !important;
+    
+    p {
+      margin: 0 auto;
+    }
+  }
+}
