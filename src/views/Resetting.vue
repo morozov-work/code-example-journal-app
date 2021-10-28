@@ -4,14 +4,10 @@
       <template v-slot:actions>
         <v-col>
           <v-row>
-            <v-text-field
-              label="Введите логин"
-              :rules="rules"
-              hide-details="auto"
-            />
+            <input-text label="Введите логин" />
           </v-row>
           <v-row>
-            <v-btn block outlined class="mt-6 mb-3">Восстановить</v-btn>
+            <v-btn block outlined class="mb-3">Восстановить</v-btn>
           </v-row>
           <v-row>
             <router-link to="/login"> Вернуться на страницу входа </router-link>
@@ -24,15 +20,11 @@
 
 <script>
 import ViewportCard from "@/components/ViewportCard/ViewportCard.vue";
+import InputText from "@/components/controls/InputText.vue";
 
 export default {
-  components: { ViewportCard },
+  components: { ViewportCard, InputText },
   name: "resetting",
   props: {},
-  data() {
-    return {
-      loading: false,
-    };
-  },
 };
 </script>
