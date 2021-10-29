@@ -9,7 +9,6 @@
     <v-col>
       <v-row>
         <v-btn @click="toogleNavigationExpanded">expand</v-btn>
-        <v-btn @click="$router.push({ name: 'NotFound' })">test route</v-btn>
       </v-row>
       <navigation-list></navigation-list>
     </v-col>

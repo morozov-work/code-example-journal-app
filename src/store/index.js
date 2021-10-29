@@ -27,7 +27,7 @@ const layout = {
   name: layout,
   namespaced: true,
   state: () => ({
-    NAVIGATION_EXPANDED: false,
+    NAVIGATION_EXPANDED: navigation.defaultState,
   }),
   mutations: {
     SET_NAVIGATION_EXPANDED: (state) => {

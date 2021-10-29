@@ -41,6 +41,26 @@
     line-height: 20px !important;
     font-weight: 500;
 
+    &__content {
+      line-height: 1rem;
+
+      &__icon {
+        margin: 0 16px 0 4px;
+      }
+    }
+
+    &__chevron {
+      transition: 0.3s ease-in-out;
+
+      &--main {
+        transform: rotate(-90deg)
+      }
+
+      &--active {
+        transition: 0.3s ease-in-out;
+        transform: rotate(-180deg)
+      }
+    }
   }
 
   &-content {
@@ -50,4 +70,11 @@
     font-size: 12px !important;
     line-height: 16px !important;
   }
+}
+
+.fade-enter-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }

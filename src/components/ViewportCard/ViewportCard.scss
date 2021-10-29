@@ -1,19 +1,22 @@
+html {
+  overflow-y: auto !important;
+}
 .viewport-card {
-    display: flex;
-    height: 100vh;
-    background-color: $primary;
+	display: flex;
+	height: 100vh;
+	background-color: $primary;
 
-    &__card {
-        box-shadow: $box-shadow-root;
-        margin: auto;
+	&__card {
+		box-shadow: $box-shadow-root;
+		margin: auto;
 
-        &--title {
-            text-transform: uppercase;
-            padding-bottom: 0 !important;
+		&--title {
+			text-transform: uppercase;
+			padding-bottom: 0 !important;
 
-            p{
-                margin: auto !important;
-            }
-        }
-    }
+			p{
+				margin: auto !important;
+			}
+		}
+	}
 }

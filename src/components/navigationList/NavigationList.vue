@@ -1,16 +1,26 @@
 <template>
   <v-row justify="center">
-    <chevron></chevron>
     <v-expansion-panels accordion flat class="expansion-panels">
       <v-expansion-panel>
         <v-expansion-panel-header
           color="primary"
           class="expansion-panel-header"
+          :hide-actions="!showHeaders"
         >
-          <v-row :style="{ 'line-height': '1rem' }" align="center">
-            <main-icon :style="{ 'margin-right': '16px' }" />
-            Главная
+          <v-row class="expansion-panel-header__content" align="center">
+            <main-icon class="expansion-panel-header__content__icon" />
+            <transition name="fade">
+              <span v-if="showHeaders">Главная</span>
+            </transition>
           </v-row>
+          <template v-slot:actions>
+            <transition name="fade">
+              <chevron-down
+                v-if="showHeaders"
+                class="expansion-panel-header__chevron--main"
+              />
+            </transition>
+          </template>
         </v-expansion-panel-header>
       </v-expansion-panel>
       <v-expansion-panel
@@ -21,13 +31,29 @@
         <v-expansion-panel-header
           color="primary"
           class="expansion-panel-header"
+          @click="onChange(item.title)"
         >
-          <v-row :style="{ 'line-height': '1rem' }" align="center">
-            <component :is="item.icon" :style="{ 'margin-right': '16px' }" />
-            {{ item.title }}
+          <v-row class="expansion-panel-header__content" align="center">
+            <component
+              :is="item.icon"
+              class="expansion-panel-header__content__icon"
+            />
+            <transition name="fade">
+              <span v-if="showHeaders">{{ item.title }}</span>
+            </transition>
           </v-row>
           <template v-slot:actions>
-            <v-icon color="#FFFFFF">mdi-chevron-down</v-icon>
+            <transition name="fade">
+              <div v-if="showHeaders">
+                <chevron-down
+                  :class="
+                    item.title === activeItem
+                      ? 'expansion-panel-header__chevron--active'
+                      : 'expansion-panel-header__chevron'
+                  "
+                />
+              </div>
+            </transition>
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content color="primary">
@@ -45,14 +71,18 @@
 </template>
 
 <script>
-import "./NavigationList.scss";
-//import Chevron from "@/components/icons/Chevron.vue";
+import { mapGetters } from "vuex";
+import { navigation } from "@/util/constants";
+
 import MainIcon from "@/assets/icons/navigation/main.svg";
 import JournalsIcon from "@/assets/icons/navigation/journals.svg";
 import OrganizationsIcon from "@/assets/icons/navigation/organizations.svg";
 import UsersIcon from "@/assets/icons/navigation/users.svg";
 import NotificationsIcon from "@/assets/icons/navigation/notifications.svg";
 import CheckoutIcon from "@/assets/icons/navigation/checkout.svg";
+import ChevronDown from "@/assets/icons/navigation/chevron-down.svg";
+
+import "./NavigationList.scss";
 
 export default {
   name: "navigation-list",
@@ -64,9 +94,12 @@ export default {
     UsersIcon,
     NotificationsIcon,
     CheckoutIcon,
+    ChevronDown,
   },
 
   data: () => ({
+    activeItem: undefined,
+    showHeaders: navigation.defaultState,
     navItems: [
       { title: "Журналы", icon: "JournalsIcon" },
       { title: "Организации", icon: "OrganizationsIcon" },
@@ -91,10 +124,32 @@ export default {
     ],
   }),
 
-  methods: {},
+  methods: {
+    onChange(item) {
+      this.activeItem === item
+        ? (this.activeItem = undefined)
+        : (this.activeItem = item);
+    },
+  },
 
-  computed: {},
+  computed: {
+    ...mapGetters("layout", {
+      isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
+    }),
+  },
 
   mounted() {},
+
+  watch: {
+    isNavigationExpanded(val, oldVal) {
+      if (oldVal) {
+        this.showHeaders = this.isNavigationExpanded;
+      } else {
+        setTimeout(() => {
+          this.showHeaders = this.isNavigationExpanded;
+        }, 100);
+      }
+    },
+  },
 };
 </script>
