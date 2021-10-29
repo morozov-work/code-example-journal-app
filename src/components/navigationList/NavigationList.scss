@@ -34,14 +34,38 @@
     opacity: 0.4 !important;
   }
 
-  &-header {
+  &--active {
+    .expansion-panel__header {
+      font-weight: 700;
+
+      &__row__icon {
+        g {
+          opacity: 1;
+        }
+      }
+
+      &__chevron, 
+      &__chevron--main {
+        path {
+          opacity: 1;
+        }
+      }
+
+      &__chevron {
+        transition: 0.3s ease-in-out;
+        transform: rotate(-180deg)
+      }
+    }
+  }
+
+  &__header {
     color: $navigation-panel-text-color;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     line-height: 20px !important;
     font-weight: 500;
 
-    &__content {
+    &__row {
       line-height: 1rem;
 
       &__icon {
@@ -56,14 +80,10 @@
         transform: rotate(-90deg)
       }
 
-      &--active {
-        transition: 0.3s ease-in-out;
-        transform: rotate(-180deg)
-      }
     }
   }
 
-  &-content {
+  &__content {
     color: $navigation-panel-text-color;
     font-style: normal;
     font-weight: normal;
@@ -77,4 +97,11 @@
 }
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+/*
+* Отключает дефолтное расширение заголовка при открытии
+*/
+.freeze-height {
+  min-height: 48px !important;
 }

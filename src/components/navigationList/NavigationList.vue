@@ -1,45 +1,36 @@
 <template>
   <v-row justify="center">
-    <v-expansion-panels accordion flat class="expansion-panels">
-      <v-expansion-panel>
-        <v-expansion-panel-header
-          color="primary"
-          class="expansion-panel-header"
-          :hide-actions="!showHeaders"
-        >
-          <v-row class="expansion-panel-header__content" align="center">
-            <main-icon class="expansion-panel-header__content__icon" />
-            <transition name="fade">
-              <span v-if="showHeaders">Главная</span>
-            </transition>
-          </v-row>
-          <template v-slot:actions>
-            <transition name="fade">
-              <chevron-down
-                v-if="showHeaders"
-                class="expansion-panel-header__chevron--main"
-              />
-            </transition>
-          </template>
-        </v-expansion-panel-header>
-      </v-expansion-panel>
+    <v-expansion-panels
+      v-model="activePanelIndex"
+      accordion
+      flat
+      tile
+      hover
+      class="expansion-panels"
+      active-class="expansion-panel--active"
+    >
       <v-expansion-panel
-        v-for="(item, index) in navItems"
+        v-for="(panel, index) in panels"
         :key="index"
         class="expansion-panel"
       >
         <v-expansion-panel-header
           color="primary"
-          class="expansion-panel-header"
-          @click="onChange(item.title)"
+          :class="
+            index
+              ? 'expansion-panel__header'
+              : 'expansion-panel__header freeze-height'
+          "
+          :hide-actions="!showHeaders"
+          open="false"
         >
-          <v-row class="expansion-panel-header__content" align="center">
+          <v-row class="expansion-panel__header__row" align="center">
             <component
-              :is="item.icon"
-              class="expansion-panel-header__content__icon"
+              :is="panel.icon"
+              class="expansion-panel__header__row__icon"
             />
             <transition name="fade">
-              <span v-if="showHeaders">{{ item.title }}</span>
+              <span v-if="showHeaders">{{ panel.title }}</span>
             </transition>
           </v-row>
           <template v-slot:actions>
@@ -47,19 +38,19 @@
               <div v-if="showHeaders">
                 <chevron-down
                   :class="
-                    item.title === activeItem
-                      ? 'expansion-panel-header__chevron--active'
-                      : 'expansion-panel-header__chevron'
+                    index
+                      ? 'expansion-panel__header__chevron'
+                      : 'expansion-panel__header__chevron--main'
                   "
                 />
               </div>
             </transition>
           </template>
         </v-expansion-panel-header>
-        <v-expansion-panel-content color="primary">
+        <v-expansion-panel-content v-if="index" color="primary">
           <v-list>
-            <v-list-item v-for="(item, index) in content" :key="index">
-              <v-list-item-content class="expansion-panel-content">
+            <v-list-item v-for="(item, index) in panelsContent" :key="index">
+              <v-list-item-content class="expansion-panel__content">
                 {{ item }}
               </v-list-item-content>
             </v-list-item>
@@ -98,16 +89,17 @@ export default {
   },
 
   data: () => ({
-    activeItem: undefined,
+    activePanelIndex: undefined,
     showHeaders: navigation.defaultState,
-    navItems: [
+    panels: [
+      { title: "Главная", icon: "MainIcon" },
       { title: "Журналы", icon: "JournalsIcon" },
       { title: "Организации", icon: "OrganizationsIcon" },
       { title: "Пользователи", icon: "UsersIcon" },
       { title: "Оповещения", icon: "NotificationsIcon" },
       { title: "Отладка", icon: "CheckoutIcon" },
     ],
-    content: [
+    panelsContent: [
       "Температура и влажность помещения",
       "Температура сотрудников",
       "Дезинсекция и дератизация",
@@ -124,18 +116,16 @@ export default {
     ],
   }),
 
-  methods: {
-    onChange(item) {
-      this.activeItem === item
-        ? (this.activeItem = undefined)
-        : (this.activeItem = item);
-    },
-  },
-
   computed: {
     ...mapGetters("layout", {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
+
+    activePanel() {
+      return this.activePanelIndex
+        ? this.panels[this.activePanelIndex].title
+        : undefined;
+    },
   },
 
   mounted() {},
