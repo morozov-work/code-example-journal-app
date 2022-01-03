@@ -1,6 +1,7 @@
 html {
   overflow-y: auto !important;
 }
+
 .viewport-card {
 	display: flex;
 	height: 100vh;
@@ -9,14 +10,14 @@ html {
 	&__card {
 		box-shadow: $box-shadow-root;
 		margin: auto;
+	}
 
-		&--title {
-			text-transform: uppercase;
-			padding-bottom: 0 !important;
+	&__title {
+		text-transform: uppercase;
+		padding-bottom: 0 !important;
 
-			p{
-				margin: auto !important;
-			}
+		p{
+			margin: auto !important;
 		}
 	}
 }

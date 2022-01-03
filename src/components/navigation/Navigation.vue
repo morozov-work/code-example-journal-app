@@ -4,22 +4,29 @@
     :mini-variant-width="collapsedWidth"
     :width="expandedWidth"
     color="primary"
+    disable-resize-watcher
+    hide-overlay
+    permanent
     app
+    ref="drawer"
   >
-    <v-col>
-      <v-row>
-        <v-btn @click="toogleNavigationExpanded">expand</v-btn>
-      </v-row>
-      <navigation-list></navigation-list>
-    </v-col>
+    <div class="navigation-wrapper" ref="wrapper">
+      <!-- <v-button @click="toogleNavigationExpanded()">expand</v-button> -->
+      <navigation-user-menu @toggle-navigation="toogleNavigationExpanded()" />
+      <navigation-list />
+      <navigation-about :scroll-top="scroll" />
+    </div>
   </v-navigation-drawer>
 </template>
 
 <script>
-import NavigationList from "@/components/NavigationList/NavigationList.vue";
-
 import { mapGetters, mapActions } from "vuex";
 import { navigation as navigationSettings } from "@/util/constants";
+import { ScrollWatcher } from "@/util/scrollWatcher";
+
+import NavigationList from "@/components/NavigationList/NavigationList.vue";
+import NavigationUserMenu from "@/components/NavigationUserMenu/NavigationUserMenu.vue";
+import NavigationAbout from "../NavigationAbout/NavigationAbout.vue";
 
 import "./Navigation.scss";
 
@@ -28,14 +35,14 @@ export default {
 
   components: {
     NavigationList,
+    NavigationUserMenu,
+    NavigationAbout,
   },
 
-  methods: {
-    ...mapActions("layout", ["TOGGLE_NAVIGATION_EXPANDED"]),
-
-    toogleNavigationExpanded() {
-      this.$store.dispatch("layout/TOGGLE_NAVIGATION_EXPANDED");
-    },
+  data() {
+    return {
+      scroll: 0,
+    };
   },
 
   computed: {
@@ -48,6 +55,22 @@ export default {
     collapsedWidth: () => navigationSettings.collapsedWidth,
   },
 
-  mounted() {},
+  methods: {
+    ...mapActions("layout", ["TOGGLE_NAVIGATION_EXPANDED"]),
+
+    toogleNavigationExpanded() {
+      this.$store.dispatch("layout/TOGGLE_NAVIGATION_EXPANDED");
+    },
+  },
+
+  mounted() {
+    const params = {
+      context: this,
+      valueName: "scroll",
+      container: document.querySelector(".v-navigation-drawer__content"),
+      target: this.$refs.wrapper,
+    };
+    new ScrollWatcher(params);
+  },
 };
 </script>

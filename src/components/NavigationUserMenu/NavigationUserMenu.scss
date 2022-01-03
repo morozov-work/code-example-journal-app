@@ -1,0 +1,44 @@
+.navigation-user-menu {
+  color: $navigation-panel-text-color;
+  padding: 0;
+  min-height: 117px;
+
+  &--expanded {
+    margin: 16px 16px 0px 16px;
+  }
+
+  &__icon {
+    padding: 0 !important;
+    margin-right: 10px;
+  }
+  
+  &__name {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  &__button {
+    cursor: pointer;
+  }
+
+  &__role {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  &__hamburger {
+    margin: 16px 16px 0px 16px;
+    cursor: pointer;
+  }
+}
+
+.fade-enter-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transition-delay: opacity .3s;
+}

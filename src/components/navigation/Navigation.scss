@@ -1,3 +1,11 @@
+.navigation-wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f4590c;
+}
+
 /* Ширина */
 .v-navigation-drawer__content::-webkit-scrollbar {
   width: 6px;

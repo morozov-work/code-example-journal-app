@@ -13,7 +13,7 @@
   &::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 100%;
     left: 0;
     height: 1px;
     width: 100%;
@@ -26,7 +26,7 @@
   &::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    top: 100% !important;
     left: 0;
     height: 1px;
     width: 100%;
@@ -34,61 +34,105 @@
     opacity: 0.4 !important;
   }
 
-  &--active {
-    .expansion-panel__header {
-      font-weight: 700;
-
-      &__row__icon {
-        g {
-          opacity: 1;
-        }
-      }
-
-      &__chevron, 
-      &__chevron--main {
-        path {
-          opacity: 1;
-        }
-      }
-
-      &__chevron {
-        transition: 0.3s ease-in-out;
-        transform: rotate(-180deg)
-      }
-    }
+  &:last-child::after {
+    display: none;
   }
 
-  &__header {
+  .panel-header {
     color: $navigation-panel-text-color;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     line-height: 20px !important;
     font-weight: 500;
+  }
 
-    &__row {
-      line-height: 1rem;
+  .panel-header__row {
+    line-height: 1rem;
+  }
 
-      &__icon {
-        margin: 0 16px 0 4px;
-      }
+  .panel-header__icon {
+    // margin: 0 16px 0 0;
+    margin-left: 4px;
+  }
+
+  .panel-header__title {
+    margin-left: 16px;
+  }
+
+  .panel-header__chevron {
+    transition: 0.3s ease-in-out;
+
+    &--main {
+      transform: rotate(-90deg)
     }
+  }
+}
 
-    &__chevron {
-      transition: 0.3s ease-in-out;
+.expansion-panel--active {
+  .panel-header {
+    font-weight: 700;
+  }
 
-      &--main {
-        transform: rotate(-90deg)
-      }
-
+  .panel-header__icon {
+    g {
+      opacity: 1;
     }
   }
 
-  &__content {
-    color: $navigation-panel-text-color;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px !important;
-    line-height: 16px !important;
+  .panel-header__chevron, 
+  .panel-header__chevron--main {
+    path {
+      opacity: 1;
+    }
+  }
+
+  .panel-header__chevron {
+    transition: 0.3s ease-in-out;
+    transform: rotate(-180deg);
+  }
+}
+
+.journals-list {
+  padding: 0 !important;
+}
+
+.journal {
+  padding: 0 0 15px 0 !important;
+  min-height: auto !important;
+}
+
+.journal-header {
+  color: $navigation-panel-text-color;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  padding: 0 !important;
+}
+
+.journal-header__active-journal-pointer {
+  position: absolute;
+  top: calc(50%-17px);
+  left: -20px;
+  margin: 0 !important;
+
+  path {
+    opacity: 0;
+    transition: .2s;
+  }
+}
+
+.journal--active {
+  .journal-header {
+    font-weight: 600;
+    transition: .2s;
+  }
+
+  .journal-header__active-journal-pointer {
+    path {
+      opacity: 1;
+      transition: .2s;
+    }
   }
 }
 

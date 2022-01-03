@@ -1,7 +1,7 @@
 <template>
   <v-container class="viewport-card" fluid>
     <v-card :loading="loading" min-width="500px" class="viewport-card__card">
-      <v-card-title class="viewport-card__card--title">
+      <v-card-title class="viewport-card__title">
         <slot name="title">
           <p>{{ title }}</p>
         </slot>
