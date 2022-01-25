@@ -26,12 +26,16 @@
               "
             >
               <!-- :style="{ margin: '0 20px 20px 0' }" -->
-              <journal-card></journal-card>
+              <journal-card title="Температура и влажность помещения">
+                <template v-slot:icon>
+                  <temperature-humidity />
+                </template>
+              </journal-card>
               <v-card
                 v-for="(journal, index) in journals"
                 :key="index"
-                width="350"
-                height="207"
+                width="400"
+                height="276"
               >
                 {{ journal }}
               </v-card>
@@ -52,6 +56,8 @@ import Heading from "@/components/Heading/Heading.vue";
 import JournalCard from "@/components/JournalCard/JournalCard.vue";
 import NewJournal from "@/components/NewJournal/NewJournal.vue";
 
+import TemperatureHumidity from "@/assets/icons/journals/temperature-humidity.svg";
+
 import { mapGetters } from "vuex";
 
 import "./Home.scss";
@@ -64,6 +70,7 @@ export default {
     Heading,
     JournalCard,
     NewJournal,
+    TemperatureHumidity,
   },
 
   name: "Home",

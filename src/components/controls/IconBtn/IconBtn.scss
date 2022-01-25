@@ -1,0 +1,32 @@
+.icon-btn {
+  background-color: transparent !important;
+  height: 24px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 24px !important;
+  color: $secondary;
+  text-transform: none;
+
+  &::before {
+    background-color: transparent;
+  }
+
+  &:hover {
+    color: $primary;
+
+    .v-btn__content {
+      svg {
+
+        path {
+          stroke: $primary;
+          transition: all ease 0.3s;
+        }
+
+        .fill-element {
+          fill: $primary;
+          transition: all ease 0.3s;
+        }
+      }
+    }
+  }
+}

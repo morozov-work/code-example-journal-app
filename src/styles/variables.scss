@@ -9,6 +9,15 @@
 $body-font-family: "Raleway", sans-serif;
 $heading-font-family: "Raleway", sans-serif;
 $font-size-root: 14px;
+$font-weights: (
+                'thin': 100,
+                'light': 300,
+                'regular': 400,
+                'medium': 500,
+                'semibold': 600,
+                'bold': 700,
+                'black': 900
+              );
 
 // System Colors
 $primary:       #F45A0C !important;
@@ -34,3 +43,7 @@ $expansion-panel-header-padding: 17px 22px 17px 24px;
 
 // Navigation panel
 $navigation-panel-text-color: #FFFFFF !important;
+
+$data-table-border-radius: 0;
+$data-table-regular-row-font-size: 1rem;
+$data-table-regular-row-height: 40px;

@@ -6,7 +6,7 @@
       <warning class="align-self-center mr-4" />
       <v-col>
         <v-row>
-          <span class="font-weight-bold black--text text-h6"
+          <span class="font-weight-semibold black--text text-h6"
             >У Вас имеются незаполненные журналы</span
           >
         </v-row>
