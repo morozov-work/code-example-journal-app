@@ -6,6 +6,7 @@
       <chevron-down />
     </v-btn>
     <v-spacer />
+    <v-btn @click="camera">Camera</v-btn>
     <v-btn color="white" plain>
       <play class="mr-3" />
       <span class="secondary--text text-h6">видеоуроки</span>
@@ -27,6 +28,7 @@ import ChevronDown from "@/assets/icons/toolbar/chevron-down.svg";
 import Play from "@/assets/icons/toolbar/play.svg";
 import Paper from "@/assets/icons/toolbar/paper.svg";
 import ChatQuestion from "@/assets/icons/toolbar/chat-question.svg";
+import { usePhotoGallery } from "@/composables/camera.js";
 
 export default {
   components: {
@@ -42,6 +44,13 @@ export default {
 
   data() {
     return {};
+  },
+
+  methods: {
+    camera() {
+      const { takePhoto } = usePhotoGallery();
+      takePhoto();
+    },
   },
 };
 </script>
