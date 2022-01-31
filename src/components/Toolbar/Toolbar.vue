@@ -7,15 +7,15 @@
     </v-btn>
     <v-spacer />
     <v-btn @click="camera">Camera</v-btn>
-    <v-btn color="white" plain>
+    <v-btn v-if="!isTablet" color="white" plain>
       <play class="mr-3" />
       <span class="secondary--text text-h6">видеоуроки</span>
     </v-btn>
-    <v-btn color="white" plain>
+    <v-btn v-if="!isTablet" color="white" plain>
       <paper class="mr-3" />
       <span class="secondary--text text-h6">инструкции</span>
     </v-btn>
-    <v-btn color="white" plain>
+    <v-btn v-if="!isTablet" color="white" plain>
       <chat-question class="mr-3" />
       <span class="secondary--text text-h6">Задать вопрос</span>
     </v-btn>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import Bag from "@/assets/icons/toolbar/bag.svg";
 import ChevronDown from "@/assets/icons/toolbar/chevron-down.svg";
 import Play from "@/assets/icons/toolbar/play.svg";
@@ -44,6 +46,16 @@ export default {
 
   data() {
     return {};
+  },
+
+  computed: {
+    ...mapGetters("common", {
+      deviceType: ["GET_DEVICE_TYPE"],
+    }),
+
+    isTablet() {
+      return this.deviceType === "tablet" || this.deviceType === "phone";
+    },
   },
 
   methods: {

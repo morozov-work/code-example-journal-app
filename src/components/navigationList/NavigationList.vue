@@ -136,7 +136,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters("layout", {
+    ...mapGetters("common", {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
 

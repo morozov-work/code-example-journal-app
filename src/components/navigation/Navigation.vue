@@ -1,18 +1,22 @@
 <template>
   <v-navigation-drawer
+    v-show="!isTablet"
     :mini-variant="!isNavigationExpanded"
     :mini-variant-width="collapsedWidth"
     :width="expandedWidth"
     color="primary"
+    expand-on-hover
     disable-resize-watcher
+    mobile-breakpoint="0"
     hide-overlay
     permanent
     app
     ref="drawer"
+    @mouseenter.native="onMouseEnter"
+    @mouseleave.native="onMouseLeave"
   >
     <div class="navigation-wrapper" ref="wrapper">
-      <!-- <v-button @click="toogleNavigationExpanded()">expand</v-button> -->
-      <navigation-user-menu @toggle-navigation="toogleNavigationExpanded()" />
+      <navigation-user-menu />
       <navigation-list />
       <navigation-about :scroll-top="scroll" />
     </div>
@@ -20,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import { navigation as navigationSettings } from "@/util/constants";
 import { ScrollWatcher } from "@/util/scrollWatcher";
 
@@ -46,9 +50,17 @@ export default {
   },
 
   computed: {
-    ...mapGetters("layout", {
+    ...mapGetters("common", {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
+
+    ...mapGetters("common", {
+      deviceType: ["GET_DEVICE_TYPE"],
+    }),
+
+    isTablet() {
+      return this.deviceType === "tablet" || this.deviceType === "phone";
+    },
 
     expandedWidth: () => navigationSettings.expandedWidth,
 
@@ -56,10 +68,12 @@ export default {
   },
 
   methods: {
-    ...mapActions("layout", ["TOGGLE_NAVIGATION_EXPANDED"]),
+    onMouseEnter() {
+      this.$store.commit("common/SET_NAVIGATION_EXPANDED");
+    },
 
-    toogleNavigationExpanded() {
-      this.$store.dispatch("layout/TOGGLE_NAVIGATION_EXPANDED");
+    onMouseLeave() {
+      this.$store.commit("common/SET_NAVIGATION_COLLAPSED");
     },
   },
 

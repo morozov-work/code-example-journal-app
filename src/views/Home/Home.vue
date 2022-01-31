@@ -11,20 +11,20 @@
       <toolbar />
     </v-app-bar>
     <navigation></navigation>
-    <v-main :style="{ 'padding-left': viewportShift }">
+    <v-main
+      :style="{ 'padding-left': viewportShift }"
+      @click.native="collapseNavigation"
+    >
       <v-container fluid class="pt-0 pr-10 pb-10 pl-10">
         <div class="d-flex flex-column align-start">
           <div>
             <warning-message />
             <heading />
-            <div
-              class="mt-6"
-              style="
-                display: grid;
+            <div class="mt-6" style="display: flex; flex-wrap: wrap">
+              <!-- display: grid;
                 grid-gap: 20px;
-                grid-template-columns: repeat(3, auto);
-              "
-            >
+                grid-template-columns: repeat(3, auto); -->
+
               <!-- :style="{ margin: '0 20px 20px 0' }" -->
               <journal-card title="Температура и влажность помещения">
                 <template v-slot:icon>
@@ -101,9 +101,16 @@ export default {
   }),
 
   computed: {
-    ...mapGetters("layout", {
+    ...mapGetters("common", {
       viewportShift: ["GET_VIEWPORT_SHIFT"],
     }),
+  },
+
+  methods: {
+    collapseNavigation() {
+      // временно отключено за ненадобностью. Для сенсорных экранов vuetify компонент имеет свои состояния
+      //this.$store.dispatch("layout/NAVIGATION_COLLAPSE");
+    },
   },
 };
 </script>

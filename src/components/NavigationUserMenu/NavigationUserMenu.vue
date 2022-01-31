@@ -12,21 +12,14 @@
             class="navigation-user-menu__name"
           >
             <span>username</span>
-            <chevron-down
-              class="navigation-user-menu__button"
-              @click="$emit('toggle-navigation')"
-            />
+            <chevron-down class="navigation-user-menu__button" />
           </v-row>
           <v-row class="navigation-user-menu__role">
             <span>Суперадминистратор</span>
           </v-row>
         </v-col>
       </v-row>
-      <hamburger-menu
-        v-else
-        class="navigation-user-menu__hamburger"
-        @click="$emit('toggle-navigation')"
-      />
+      <hamburger-menu v-else class="navigation-user-menu__hamburger" />
     </transition>
   </v-container>
 </template>
@@ -59,7 +52,7 @@ export default {
   methods: {},
 
   computed: {
-    ...mapGetters("layout", {
+    ...mapGetters("common", {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
   },

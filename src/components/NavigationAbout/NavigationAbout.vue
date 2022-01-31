@@ -72,7 +72,7 @@ export default {
   methods: {},
 
   computed: {
-    ...mapGetters("layout", {
+    ...mapGetters("common", {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
 
