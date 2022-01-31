@@ -1,8 +1,14 @@
 <template>
+  <!-- max-width="400"
+    max-height="276" -->
   <v-card
-    width="400"
-    height="276"
-    class="d-flex flex-column justify-space-between pa-5"
+    class="
+      d-flex
+      flex-column
+      justify-space-between
+      pa-5
+      rounded rounded-sm-sm rounded-xs-sm
+    "
   >
     <v-card-title class="d-flex flex-nowrap pa-0">
       <alert style="position: absolute; top: 20px; right: 20px" />

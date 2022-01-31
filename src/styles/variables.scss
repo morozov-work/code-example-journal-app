@@ -28,22 +28,32 @@ $black:         #2B2B2B !important;
 $gray:          #6F6E6E !important;
 $gray-light:    #F4F4F4 !important;
 
+// border-radius
 $border-radius-root: 25px;
+$rounded: (
+  'sm': 15px,
+);
+
+// shadow
 $box-shadow-root: 0px 4px 20px rgba(0, 0, 0, 0.1) !important; //custom
 
+// v-btn
 $btn-border-radius: none;
 
+// v-text-field
 $text-field-border-radius: 8px;
 
+// v-expansion-panel
 $expansion-panel-border-radius: none;
 $expansion-panel-header-font-size: 1rem;
 $expansion-panel-content-padding: 0 20px 0 56px;
 $expansion-panel-header-padding: 17px 22px 17px 24px;
 // $expansion-panel-header-padding: 17px 22px 17px 32px;
 
-// Navigation panel
+// v-navigation-panel
 $navigation-panel-text-color: #FFFFFF !important;
 
+// v-data-table
 $data-table-border-radius: 0;
 $data-table-regular-row-font-size: 1rem;
 $data-table-regular-row-height: 40px;
