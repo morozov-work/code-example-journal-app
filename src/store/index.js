@@ -1,6 +1,10 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { navigation as navigationConstants } from "@/util/constants";
+import { calcViewportShift, findDeviceType } from "@/util/utils";
+
+const { expandedWidth: expandedShift, collapsedWidth: collapsedShift } =
+  navigationConstants;
 
 Vue.use(Vuex);
 
@@ -27,34 +31,50 @@ const auth = {
   },
 };
 
-const layout = {
-  name: layout,
+const common = {
+  name: common,
   namespaced: true,
 
   state: () => ({
+    DEVICE_TYPE: findDeviceType(),
+
     NAVIGATION_EXPANDED: navigationConstants.defaultState,
+
+    VIEWPORT_SHIFT: calcViewportShift(),
   }),
 
   mutations: {
+    SET_DEVICE_TYPE: (state, payload) => {
+      state.DEVICE_TYPE = payload;
+    },
+
     SET_NAVIGATION_EXPANDED: (state) => {
-      state.NAVIGATION_EXPANDED = !state.NAVIGATION_EXPANDED;
+      state.NAVIGATION_EXPANDED = true;
+    },
+
+    SET_NAVIGATION_COLLAPSED: (state) => {
+      state.NAVIGATION_EXPANDED = false;
+    },
+
+    SET_VIEWPORT_SHIFT: (state) => {
+      if (state.DEVICE_TYPE === "tablet" || state.DEVICE_TYPE === "phone") {
+        state.VIEWPORT_SHIFT = 0;
+      } else {
+        state.VIEWPORT_SHIFT = state.NAVIGATION_EXPANDED
+          ? expandedShift
+          : collapsedShift;
+      }
     },
   },
 
-  actions: {
-    TOGGLE_NAVIGATION_EXPANDED({ commit }) {
-      commit("SET_NAVIGATION_EXPANDED");
-    },
-  },
+  actions: {},
 
   getters: {
+    GET_DEVICE_TYPE: (state) => state.DEVICE_TYPE,
+
     GET_NAVIGATION_EXPANDED: (state) => state.NAVIGATION_EXPANDED,
 
-    GET_VIEWPORT_SHIFT: (state) => {
-      const { expandedWidth: expandedShift, collapsedWidth: collapsedShift } =
-        navigationConstants;
-      return state.NAVIGATION_EXPANDED ? expandedShift : collapsedShift;
-    },
+    GET_VIEWPORT_SHIFT: (state) => state.VIEWPORT_SHIFT,
   },
 };
 
@@ -88,9 +108,9 @@ const navigation = {
   },
 
   getters: {
-    SET_NAVIGATION_ACTIVE_PANEL: (state) => state.NAVIGATION_ACTIVE_PANEL,
+    GET_NAVIGATION_ACTIVE_PANEL: (state) => state.NAVIGATION_ACTIVE_PANEL,
 
-    SET_NAVIGATION_ACTIVE_JOURNAL: (state) => state.NAVIGATION_ACTIVE_JOURNAL,
+    GET_NAVIGATION_ACTIVE_JOURNAL: (state) => state.NAVIGATION_ACTIVE_JOURNAL,
   },
 };
 
@@ -104,7 +124,7 @@ const navigation = {
 export default new Vuex.Store({
   modules: {
     auth,
-    layout,
+    common,
     navigation,
   },
 });
