@@ -15,19 +15,10 @@ const auth = {
 
   state: () => ({
     AUTH_USER: false,
-    AUTH_ACCESS_TOKEN: null,
   }),
 
   mutations: {
-    SET_AUTH_USER: (state, token) => {
-      if (token) {
-        state.AUTH_USER = true;
-        state.AUTH_ACCESS_TOKEN = token;
-      } else {
-        state.AUTH_USER = false;
-        state.AUTH_ACCESS_TOKEN = null;
-      }
-    },
+    SET_AUTH_USER: (state, auth) => (state.AUTH_USER = auth),
   },
 
   actions: {},
