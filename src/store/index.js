@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+
 import { navigation as navigationConstants } from "@/util/constants";
 import { calcViewportShift, findDeviceType } from "@/util/utils";
 
@@ -13,21 +14,26 @@ const auth = {
   namespaced: true,
 
   state: () => ({
-    AUTH: false,
+    AUTH_USER: false,
+    AUTH_ACCESS_TOKEN: null,
   }),
 
   mutations: {
-    SET_AUTHORIZED: (state) => (state.AUTH = true),
-    SET_UNAUTHORIZED: (state) => (state.AUTH = false),
+    SET_AUTH_USER: (state, token) => {
+      if (token) {
+        state.AUTH_USER = true;
+        state.AUTH_ACCESS_TOKEN = token;
+      } else {
+        state.AUTH_USER = false;
+        state.AUTH_ACCESS_TOKEN = null;
+      }
+    },
   },
 
-  actions: {
-    AUTHORIZE: ({ commit }) => commit("SET_AUTHORIZED"),
-    UNAUTHORIZE: ({ commit }) => commit("SET_UNAUTHORIZED"),
-  },
+  actions: {},
 
   getters: {
-    GET_AUTH: (state) => state.AUTH,
+    GET_AUTH_USER: (state) => state.AUTH_USER,
   },
 };
 

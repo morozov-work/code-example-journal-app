@@ -30,7 +30,6 @@ export default {
   },
 
   mounted() {
-    // if (!this.$store.state.auth.AUTH) this.$router.push("/login");
     window.addEventListener("resize", this.onResize);
   },
 

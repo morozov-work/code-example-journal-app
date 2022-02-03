@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { auth } from "@/util/auth";
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";
 import Resetting from "@/views/Resetting.vue";
@@ -9,32 +10,6 @@ import PageNotFound from "@/views/PageNotFound/PageNotFound.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "Home",
-  //   component: Home,
-  // },
-  // {
-  //   path: "/admin",
-  //   name: "Layout",
-  //   component: () => import("@/views/Layout/Layout.vue"),
-  //   children: [
-  //     {
-  //       path: "/about",
-  //       name: "About",
-  //       // route level code-splitting
-  //       // this generates a separate chunk (about.[hash].js) for this route
-  //       // which is lazy-loaded when the route is visited.
-  //       component: () =>
-  //         import(/* webpackChunkName: "about" */ "@/views/About/About.vue"),
-  //     },
-  //     {
-  //       path: "/auth",
-  //       name: "Auth",
-  //       component: () => import("@/views/Auth/Auth.vue"),
-  //     },
-  //   ],
-  // },
   {
     path: "/login",
     name: "Login",
@@ -54,6 +29,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: { requiresAuth: true },
   },
   {
     name: "404",
@@ -68,6 +44,21 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!auth.checkAuth()) {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
