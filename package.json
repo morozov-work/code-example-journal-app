@@ -13,6 +13,7 @@
   },
   "main": "background.js",
   "dependencies": {
+    "@capacitor-community/barcode-scanner": "^2.0.1",
     "@capacitor/android": "^3.4.0",
     "@capacitor/camera": "^1.2.4",
     "@capacitor/core": "^3.4.0",
