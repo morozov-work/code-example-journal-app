@@ -7,6 +7,7 @@
     </v-btn>
     <v-spacer />
     <v-btn @click="camera">Camera</v-btn>
+    <v-btn @click="scanner">Scanner</v-btn>
     <v-btn v-if="!isTablet" color="white" plain>
       <play class="mr-3" />
       <span class="secondary--text text-h6">видеоуроки</span>
@@ -31,6 +32,7 @@ import Play from "@/assets/icons/toolbar/play.svg";
 import Paper from "@/assets/icons/toolbar/paper.svg";
 import ChatQuestion from "@/assets/icons/toolbar/chat-question.svg";
 import { usePhotoGallery } from "@/composables/camera.js";
+import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
 
 export default {
   components: {
@@ -62,6 +64,16 @@ export default {
     camera() {
       const { takePhoto } = usePhotoGallery();
       takePhoto();
+    },
+
+    async scanner() {
+      BarcodeScanner.hideBackground();
+      const result = await BarcodeScanner.startScan();
+      if (result.hasContent) {
+        console.log(result.content);
+      } else {
+        console.log("no content");
+      }
     },
   },
 };
