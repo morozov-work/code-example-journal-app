@@ -11,10 +11,7 @@
       <toolbar />
     </v-app-bar>
     <navigation></navigation>
-    <v-main
-      :style="{ 'padding-left': viewportShift }"
-      @click.native="collapseNavigation"
-    >
+    <v-main :style="{ 'padding-left': viewportShift }">
       <v-container fluid class="pt-0 pr-10 pb-10 pl-10">
         <slot name="content"></slot>
       </v-container>
