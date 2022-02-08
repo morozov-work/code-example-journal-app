@@ -10,14 +10,20 @@
       rounded rounded-sm-sm rounded-xs-sm
     "
   >
-    <v-card-title class="d-flex flex-nowrap pa-0">
+    <v-card-title
+      class="journal-card__title d-flex flex-nowrap pa-0"
+      @click="$emit('openJournal')"
+    >
       <alert style="position: absolute; top: 20px; right: 20px" />
       <div class="d-flex align-center mr-2">
         <slot name="icon"></slot>
       </div>
       <p class="text-h6" style="word-break: normal; margin: 0">{{ title }}</p>
     </v-card-title>
-    <v-card-text class="pa-0">
+    <v-card-text
+      class="journal-card__content pa-0"
+      @click="$emit('openJournal')"
+    >
       <v-data-table
         :headers="headers"
         :items="meterings"
