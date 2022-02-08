@@ -12,7 +12,7 @@ const {
 const { xs: phone, sm: tablet, md: laptop, lg: desktop } = breakpoints;
 
 function calcViewportShift() {
-  if (document.documentElement.clientWidth <= 600) return 0;
+  if (document.documentElement.clientWidth <= tablet) return 0;
   return defaultState ? expandedShift : collapsedShift;
 }
 
