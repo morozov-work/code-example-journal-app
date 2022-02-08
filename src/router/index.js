@@ -6,6 +6,7 @@ import Register from "@/views/Register.vue";
 import Resetting from "@/views/Resetting.vue";
 import Home from "@/views/Home/Home.vue";
 import PageNotFound from "@/views/PageNotFound/PageNotFound.vue";
+import BactericidalLogs from "@/views/BactericidalLogs/BactericidalLogs.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
   {
     path: "*",
     redirect: "404",
+  },
+  {
+    name: "Journal",
+    path: "/bactericidal-logs",
+    component: BactericidalLogs,
   },
 ];
 

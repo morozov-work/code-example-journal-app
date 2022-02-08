@@ -6,9 +6,12 @@
           <warning-message />
           <heading />
           <div class="mt-6" style="display: flex; flex-wrap: wrap">
-            <journal-card title="Температура и влажность помещения">
+            <journal-card
+              title="Журнал бактерицидных ламп"
+              @openJournal="openJournal"
+            >
               <template v-slot:icon>
-                <temperature-humidity />
+                <germicidal />
               </template>
             </journal-card>
             <v-card
@@ -16,7 +19,6 @@
               :key="index"
               width="400"
               height="276"
-              @click="getApiData"
             >
               {{ journal }}
             </v-card>
@@ -35,9 +37,8 @@ import Heading from "@/components/Heading/Heading.vue";
 import JournalCard from "@/components/JournalCard/JournalCard.vue";
 import NewJournal from "@/components/NewJournal/NewJournal.vue";
 
-import TemperatureHumidity from "@/assets/icons/journals/temperature-humidity.svg";
-
-import { getCookie } from "@/util/cookie";
+// import TemperatureHumidity from "@/assets/icons/journals/temperature-humidity.svg";
+import Germicidal from "@/assets/icons/journals/germicidal.svg";
 
 import "./Home.scss";
 
@@ -48,7 +49,8 @@ export default {
     Heading,
     JournalCard,
     NewJournal,
-    TemperatureHumidity,
+    // TemperatureHumidity,
+    Germicidal,
   },
 
   name: "Home",
@@ -74,40 +76,8 @@ export default {
   computed: {},
 
   methods: {
-    async getData(path, page = false) {
-      const base = "https://sjr.asap.dev03.spark-integration.ru/api/";
-      const token = `Bearer ${getCookie("jr_access_token")}`;
-      const url = base + path;
-
-      const params = {
-        headers: { Authorization: token },
-      };
-
-      if (page) params.params = { page: 1 };
-
-      try {
-        const data = await this.$http.get(url, params);
-        console.log(data);
-      } catch (e) {
-        console.log(e);
-        console.log(`${path} request failed`);
-      }
-    },
-
-    async getApiData() {
-      const logsUrl = "bactericidal_logs/004dc656-1b9b-4bfd-8627-4109fca3f3bd";
-      const roomUrl = "room_industrials/256fb3dd-3b73-490d-859a-b3653fc8c6f5";
-      // const usersUrl = "users/171f7f4d-7589-42fc-add0-5fb7ed68b341";
-      // const departmentsUrl = "departments/e541c1f2-d123-426d-a313-6d5bb123adaf";
-      // const emloyeesUrl = "employees/75a2948c-918e-440e-9bad-ce3025e675b5";
-      const lampsUrl = "lamps/4483758e-85af-442e-b7b2-1a7dd0704970";
-
-      await this.getData(logsUrl, true);
-      await this.getData(roomUrl);
-      // await this.getData(usersUrl); //request failed
-      // await this.getData(departmentsUrl); //request failed
-      // await this.getData(emloyeesUrl); //request failed
-      await this.getData(lampsUrl);
+    openJournal() {
+      this.$router.push({ name: "Journal" });
     },
   },
 };
