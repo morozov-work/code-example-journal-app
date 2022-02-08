@@ -6,7 +6,7 @@
       <chevron-down />
     </v-btn>
     <v-spacer />
-    <v-btn @click="camera">Camera</v-btn>
+    <!-- <v-btn @click="camera">Camera</v-btn> -->
     <v-btn v-if="!isTablet" color="white" plain>
       <play class="mr-3" />
       <span class="secondary--text text-h6">видеоуроки</span>
