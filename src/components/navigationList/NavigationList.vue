@@ -56,7 +56,7 @@
               <v-list-item-group v-model="activeJournalIndex">
                 <v-list-item
                   color="purple"
-                  v-for="(item, index) in panelsContent"
+                  v-for="(item, index) in panelsContent[panel.name]"
                   :key="index"
                   active-class="journal--active"
                   class="journal"
@@ -111,28 +111,46 @@ export default {
     activeJournalIndex: undefined,
     showHeaders: navigation.defaultState,
     panels: [
-      { title: "Главная", icon: "MainIcon" },
-      { title: "Журналы", icon: "JournalsIcon" },
-      { title: "Организации", icon: "OrganizationsIcon" },
-      { title: "Пользователи", icon: "UsersIcon" },
-      { title: "Оповещения", icon: "NotificationsIcon" },
-      { title: "Отладка", icon: "CheckoutIcon" },
+      {
+        name: "main",
+        title: "Главная",
+        icon: "MainIcon",
+      },
+      {
+        name: "journals",
+        title: "Журналы",
+        icon: "JournalsIcon",
+      },
+      {
+        name: "organizations",
+        title: "Организации",
+        icon: "OrganizationsIcon",
+      },
+      {
+        name: "users",
+        title: "Пользователи",
+        icon: "UsersIcon",
+      },
+      {
+        name: "alerts",
+        title: "Оповещения",
+        icon: "NotificationsIcon",
+      },
+      {
+        name: "debugging",
+        title: "Отладка",
+        icon: "CheckoutIcon",
+      },
     ],
-    panelsContent: [
-      "Температура и влажность помещения",
-      "Температура сотрудников",
-      "Дезинсекция и дератизация",
-      "Дезинфицирующие средства и дезинфекционные работы",
-      "Скоропортящаяся пищевая продукция",
-      "Температурный режим холодильного оборудования",
-      "Температура и влажность склада",
-      "Дефростация продуктов",
-      "Фритюрные жиры",
-      "Бракеражный журнал",
-      "Гигиенический журнал здоровья",
-      "Бактерицидная установка",
-      "Генеральные уборки",
-    ],
+
+    panelsContent: {
+      main: [],
+      journals: ["Бактерицидная установка"],
+      organizations: [],
+      users: [],
+      alerts: [],
+      debugging: [],
+    },
   }),
 
   computed: {
