@@ -53,8 +53,12 @@ const common = {
       state.NAVIGATION_EXPANDED = false;
     },
 
+    TOGGLE_NAVIGATION: (state) => {
+      state.NAVIGATION_EXPANDED = !state.NAVIGATION_EXPANDED;
+    },
+
     SET_VIEWPORT_SHIFT: (state) => {
-      if (state.DEVICE_TYPE === "tablet" || state.DEVICE_TYPE === "phone") {
+      if (state.DEVICE_TYPE === "phone") {
         state.VIEWPORT_SHIFT = 0;
       } else {
         state.VIEWPORT_SHIFT = state.NAVIGATION_EXPANDED

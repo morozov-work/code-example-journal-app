@@ -6,6 +6,15 @@
 //   font-weight: normal;
 // }
 
+// custom breakpoints
+$phone: "600px"; // xs
+$tablet: "768px"; // sm
+$laptop: "1024px"; // md*
+$desktop: "1440px"; // lg*
+
+// * -16px on desktop for browser scrollbar
+
+// common
 $body-font-family: "Raleway", sans-serif;
 $heading-font-family: "Raleway", sans-serif;
 $font-size-root: 14px;

@@ -6,12 +6,8 @@
           <user-icon />
         </v-col>
         <v-col cols="9" align-self="center">
-          <v-row
-            align="center"
-            justify="space-between"
-            class="navigation-user-menu__name"
-          >
-            <span>username</span>
+          <v-row align="center" justify="start">
+            <span class="navigation-user-menu__name">username</span>
             <chevron-down class="navigation-user-menu__button" />
           </v-row>
           <v-row class="navigation-user-menu__role">
@@ -19,7 +15,10 @@
           </v-row>
         </v-col>
       </v-row>
-      <hamburger-menu v-else class="navigation-user-menu__hamburger" />
+      <hamburger-menu
+        v-if="!showUserMenu && !isPhone"
+        class="navigation-user-menu__hamburger"
+      />
     </transition>
   </v-container>
 </template>
@@ -53,8 +52,16 @@ export default {
 
   computed: {
     ...mapGetters("common", {
+      deviceType: ["GET_DEVICE_TYPE"],
+    }),
+
+    ...mapGetters("common", {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
+
+    isPhone() {
+      return this.deviceType === "phone";
+    },
   },
 
   mounted() {},

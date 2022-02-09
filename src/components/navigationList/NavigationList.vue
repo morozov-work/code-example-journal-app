@@ -65,7 +65,7 @@
                     <active-journal-pointer
                       class="journal-header__active-journal-pointer"
                     />
-                    <span>{{ item }}</span>
+                    <span>{{ item.value }}</span>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -145,7 +145,13 @@ export default {
 
     panelsContent: {
       main: [],
-      journals: ["Бактерицидная установка"],
+      journals: [
+        {
+          name: "bactericidal",
+          value: "Бактерицидная установка",
+          route: "log-bactericidal",
+        },
+      ],
       organizations: [],
       users: [],
       alerts: [],
