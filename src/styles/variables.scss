@@ -9,10 +9,18 @@
 // custom breakpoints
 $phone: "600px"; // xs
 $tablet: "768px"; // sm
-$laptop: "1024px"; // md*
-$desktop: "1440px"; // lg*
-
+$laptop: "1024px - 16px"; // md*
+$desktop: "1440px - 16px"; // lg*
 // * -16px on desktop for browser scrollbar
+
+// vuetify breakpoints
+$grid-breakpoints: (
+  'xs': 0,
+  'sm': 600px,
+  'md': 768px,
+  'lg': 1024px - 16px,
+  'xl': 1440px - 16px
+);
 
 // common
 $body-font-family: "Raleway", sans-serif;
@@ -39,8 +47,13 @@ $gray-light:    #F4F4F4 !important;
 
 // border-radius
 $border-radius-root: 25px;
+
 $rounded: (
+  0: 0,
   'sm': 15px,
+  null: $border-radius-root,
+  'pill': 9999px,
+  'circle': 50%
 );
 
 // shadow

@@ -25,6 +25,17 @@ export default new Vuetify({
       },
     },
   },
+
+  breakpoint: {
+    thresholds: {
+      xs: 600,
+      sm: 768,
+      md: 1024,
+      lg: 1440,
+    },
+    scrollBarWidth: 16,
+  },
+
   global: {
     ripple: false,
   },
