@@ -15,4 +15,6 @@ const breakpoints = Object.freeze({
 
 // * -16px on desktop for browser scrollbar
 
-export { navigation, breakpoints };
+const AUTH_TOKEN_NAME = "jr_access_token";
+
+export { navigation, breakpoints, AUTH_TOKEN_NAME };

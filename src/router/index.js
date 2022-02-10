@@ -43,8 +43,9 @@ const routes = [
   },
   {
     name: "Journal",
-    path: "/bactericidal-logs",
+    path: "/log-bactericidallog",
     component: BactericidalLogs,
+    meta: { requiresAuth: true },
   },
 ];
 

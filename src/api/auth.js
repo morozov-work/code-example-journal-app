@@ -1,8 +1,6 @@
-import axios from "axios";
+import { axios } from ".";
 
-const url = Object.freeze({
-  API_BASE_URL: "https://sjr.asap.dev03.spark-integration.ru",
-
+const urls = Object.freeze({
   API_LOGIN_URL: "/api_user_authenticate", // method: "POST"
   API_USER_URL: "/api_user_authenticate", // method: "GET"
   API_REFRESH_URL: "/api_user_authenticate", // method: "POST"
@@ -10,30 +8,26 @@ const url = Object.freeze({
   API_REGISTRATION_URL: "/api_user_authenticate", // method: "POST"
 });
 
-function getUrl(tail) {
-  return `${url.API_BASE_URL}${url[tail]}`;
-}
-
 export function login(user) {
-  return axios.post(getUrl("API_LOGIN_URL"), user, {
+  return axios.post(urls.API_LOGIN_URL, user, {
     withCredentials: true,
   });
 }
 
 export function getUser() {
-  return axios.get(getUrl("API_USER_URL"));
+  return axios.get(urls.API_USER_URL);
 }
 
 export function refreshToken() {
-  return axios.post(getUrl("API_REFRESH_URL"), {});
+  return axios.post(urls.API_REFRESH_URL);
 }
 
 export function logout() {
-  return axios.post(getUrl("API_LOGOUT_URL"), {});
+  return axios.post(urls.API_LOGOUT_URL);
 }
 
 export function registration(user) {
-  return axios.post(getUrl("API_REGISTRATON_URL"), user, {
+  return axios.post(urls.API_REGISTRATON_URL, user, {
     withCredentials: true,
   });
 }

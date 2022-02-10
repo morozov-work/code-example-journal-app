@@ -81,8 +81,7 @@
 
 <script>
 import MainLayout from "@/layouts/MainLayout/MainLayout.vue";
-
-import { getCookie } from "@/util/cookie";
+import { getResource, getBactericidalLogs } from "@/api/bactericidalLogs";
 
 export default {
   components: {
@@ -93,8 +92,6 @@ export default {
 
   data() {
     return {
-      base: "https://sjr.asap.dev03.spark-integration.ru",
-      logsUrl: "/api/bactericidal_logs",
       logs: [],
       headers: [
         {
@@ -146,23 +143,9 @@ export default {
     };
   },
 
-  computed: {
-    params() {
-      return {
-        headers: {
-          Authorization: `Bearer ${getCookie("jr_access_token")}`,
-          // params: { page: 1 },
-        },
-      };
-    },
-  },
-
   methods: {
     async getData() {
-      const response = await this.$http.get(
-        this.base + this.logsUrl,
-        this.params
-      );
+      const response = await getBactericidalLogs();
       this.logs = response.data["hydra:member"];
     },
 
@@ -236,15 +219,9 @@ export default {
       const data = item[0];
       if (data.key === this.expandedItem.key) return;
       this.expandedItem = data;
-      const lampResponse = await this.$http.get(
-        this.base + data.lamp,
-        this.params
-      );
+      const lampResponse = await getResource(data.lamp);
       const lamp = lampResponse.data;
-      const roomResponse = await this.$http.get(
-        this.base + data.room,
-        this.params
-      );
+      const roomResponse = await getResource(data.room);
       const room = roomResponse.data;
 
       this.expandedItemDetails = {
