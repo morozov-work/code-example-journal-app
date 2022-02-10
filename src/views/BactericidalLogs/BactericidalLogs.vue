@@ -17,34 +17,25 @@
           <v-toolbar flat>
             <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-dialog v-model="dialog">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on"> Новая запись </v-btn>
+            <v-btn @click.stop="addItem"> Новая запись </v-btn>
+            <modal-dialog :dialog="addDialog" title="Редактирование / Создание">
+              <template v-slot:content>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                      v-model="editedItem.createdAt"
+                      label="Создано"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
               </template>
-              <v-card>
-                <v-card-title>
-                  <span>Редактирование/Создание</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.createdAt"
-                          label="Создано"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-
-                <v-card-actions>
-                  <v-spacer></v-spacer>
+              <template v-slot:controls>
+                <div>
                   <v-btn @click="close"> Отмена </v-btn>
                   <v-btn @click="save"> Сохранить </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+                </div>
+              </template>
+            </modal-dialog>
             <v-dialog v-model="dialogDelete">
               <v-card>
                 <v-card-title class="text-h5">Удалить запись?</v-card-title>
@@ -110,7 +101,7 @@ export default {
       ],
       items: [],
       expanded: [],
-      dialog: false,
+      addDialog: false,
       dialogDelete: false,
       editedIndex: -1,
       editedItem: {
@@ -171,6 +162,10 @@ export default {
         : date.toLocaleTimeString();
     },
 
+    addItem() {
+      this.addDialog = true;
+    },
+
     editItem(item) {
       this.editedIndex = this.items.indexOf(item);
       this.editedItem = Object.assign({}, item);
@@ -189,7 +184,7 @@ export default {
     },
 
     close() {
-      this.dialog = false;
+      this.addDialog = false;
       this.$nextTick(() => {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
