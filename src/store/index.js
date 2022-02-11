@@ -84,6 +84,39 @@ const navigation = {
   namespaced: true,
 
   state: () => ({
+    NAVIGATION_PANELS_LIST: [
+      {
+        name: "Home",
+        title: "Главная",
+        icon: "HomeIcon",
+      },
+      {
+        name: "Journals",
+        title: "Журналы",
+        icon: "JournalsIcon",
+      },
+      {
+        name: "Organizations",
+        title: "Организации",
+        icon: "OrganizationsIcon",
+      },
+      {
+        name: "Users",
+        title: "Пользователи",
+        icon: "UsersIcon",
+      },
+      {
+        name: "Notifications",
+        title: "Оповещения",
+        icon: "NotificationsIcon",
+      },
+      {
+        name: "Debugging",
+        title: "Отладка",
+        icon: "DebuggingIcon",
+      },
+    ],
+
     NAVIGATION_ACTIVE_PANEL: undefined,
     NAVIGATION_ACTIVE_JOURNAL: undefined,
   }),
@@ -109,9 +142,95 @@ const navigation = {
   },
 
   getters: {
+    GET_NAVIGATION_PANELS_LIST: (state) => state.NAVIGATION_PANELS_LIST,
+
     GET_NAVIGATION_ACTIVE_PANEL: (state) => state.NAVIGATION_ACTIVE_PANEL,
 
     GET_NAVIGATION_ACTIVE_JOURNAL: (state) => state.NAVIGATION_ACTIVE_JOURNAL,
+  },
+};
+
+const home = {
+  name: home,
+  namespaced: true,
+
+  state: () => ({
+    HOME_ITEMS_LIST: [],
+  }),
+
+  getters: {
+    GET_HOME_ITEMS_LIST: (state) => state.HOME_ITEMS_LIST,
+  },
+};
+
+const journals = {
+  name: journals,
+  namespaced: true,
+
+  state: () => ({
+    JOURNALS_ITEMS_LIST: [
+      {
+        name: "BactericidalLog",
+        value: "Бактерицидная установка",
+        route: "/log-bactericidallog",
+      },
+    ],
+  }),
+
+  getters: {
+    GET_JOURNALS_ITEMS_LIST: (state) => state.JOURNALS_ITEMS_LIST,
+  },
+};
+
+const organizations = {
+  name: organizations,
+  namespaced: true,
+
+  state: () => ({
+    ORGANIZATIONS_ITEMS_LIST: [],
+  }),
+
+  getters: {
+    GET_ORGANIZATIONS_ITEMS_LIST: (state) => state.ORGANIZATIONS_ITEMS_LIST,
+  },
+};
+
+const users = {
+  name: users,
+  namespaced: true,
+
+  state: () => ({
+    USERS_ITEMS_LIST: [],
+  }),
+
+  getters: {
+    GET_USERS_ITEMS_LIST: (state) => state.USERS_ITEMS_LIST,
+  },
+};
+
+const notifications = {
+  name: notifications,
+  namespaced: true,
+
+  state: () => ({
+    NOTIFICATIONS_ITEMS_LIST: [],
+  }),
+
+  getters: {
+    GET_NOTIFICATIONS_ITEMS_LIST: (state) => state.NOTIFICATIONS_ITEMS_LIST,
+  },
+};
+
+const debugging = {
+  name: debugging,
+  namespaced: true,
+
+  state: () => ({
+    DEBUGGING_ITEMS_LIST: [],
+  }),
+
+  getters: {
+    GET_DEBUGGING_ITEMS_LIST: (state) => state.DEBUGGING_ITEMS_LIST,
   },
 };
 
@@ -127,5 +246,11 @@ export default new Vuex.Store({
     auth,
     common,
     navigation,
+    home,
+    journals,
+    organizations,
+    users,
+    notifications,
+    debugging,
   },
 });
