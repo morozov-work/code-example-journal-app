@@ -17,7 +17,7 @@
           <v-toolbar flat>
             <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn @click.stop="addItem"> Новая запись </v-btn>
+            <action-btn @click="addItem"> Новая запись</action-btn>
             <modal-dialog :dialog="addDialog" title="Редактирование / Создание">
               <template v-slot:content>
                 <v-row>
@@ -31,22 +31,24 @@
               </template>
               <template v-slot:controls>
                 <div>
-                  <v-btn @click="close"> Отмена </v-btn>
-                  <v-btn @click="save"> Сохранить </v-btn>
+                  <action-btn @click="close"> Отмена </action-btn>
+                  <action-btn @click="save"> Сохранить </action-btn>
                 </div>
               </template>
             </modal-dialog>
-            <v-dialog v-model="dialogDelete">
-              <v-card>
-                <v-card-title class="text-h5">Удалить запись?</v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn @click="closeDelete">Отмена</v-btn>
-                  <v-btn @click="deleteItemConfirm">OK</v-btn>
-                  <v-spacer></v-spacer>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+            <modal-dialog :dialog="dialogDelete" max-width="400">
+              <template v-slot:content>
+                <v-row class="justify-center">
+                  <span class="text-h5">Удалить запись?</span>
+                </v-row>
+              </template>
+              <template v-slot:controls>
+                <div>
+                  <action-btn @click="closeDelete"> Отмена </action-btn>
+                  <action-btn @click="deleteItemConfirm"> OK </action-btn>
+                </div>
+              </template>
+            </modal-dialog>
           </v-toolbar>
         </template>
         <template v-slot:item.actions="{ item }">
@@ -79,7 +81,7 @@ export default {
     MainLayout,
   },
 
-  name: "bactericidal-logs",
+  name: "bactericidal-log",
 
   data() {
     return {

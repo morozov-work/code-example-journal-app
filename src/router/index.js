@@ -6,7 +6,7 @@ import Register from "@/views/Register.vue";
 import Resetting from "@/views/Resetting.vue";
 import Home from "@/views/Home/Home.vue";
 import PageNotFound from "@/views/PageNotFound/PageNotFound.vue";
-import BactericidalLogs from "@/views/BactericidalLogs/BactericidalLogs.vue";
+import BactericidalLog from "@/views/BactericidalLog/BactericidalLog.vue";
 
 Vue.use(VueRouter);
 
@@ -44,7 +44,7 @@ const routes = [
   {
     name: "Journal",
     path: "/log-bactericidallog",
-    component: BactericidalLogs,
+    component: BactericidalLog,
     meta: { requiresAuth: true },
   },
 ];
