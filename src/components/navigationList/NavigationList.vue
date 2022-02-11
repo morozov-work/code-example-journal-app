@@ -23,12 +23,6 @@
             open="false"
             style="background-color: #ffffff00 !important"
           >
-            <!-- class="expansion-panel__header freeze-height" -->
-            <!-- :class="
-            index
-              ? 'expansion-panel__header'
-              : 'expansion-panel__header freeze-height'
-          " -->
             <v-row class="panel-header__row" align="center">
               <component :is="panel.icon" class="panel-header__icon" />
               <transition name="fade">
