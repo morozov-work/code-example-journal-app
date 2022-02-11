@@ -8,7 +8,7 @@
   >
     <slot name="icon"></slot>
     <span v-if="!isTablet" class="toolbar-btn__content secondary--text text-h6">
-      {{ content }}
+      <slot></slot>
     </span>
   </v-btn>
 </template>
@@ -20,10 +20,6 @@ import "./ToolbarBtn.scss";
 
 export default {
   name: "toolbar-btn",
-
-  props: {
-    content: String,
-  },
 
   computed: {
     ...mapGetters("common", {

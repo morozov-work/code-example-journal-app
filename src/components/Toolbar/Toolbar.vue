@@ -27,14 +27,11 @@
     <v-spacer v-if="!isPhone" />
     <!-- кнопка камеры пока отключена за ненадобностью -->
     <!-- <v-btn @click="camera">Camera</v-btn> -->
-    <toolbar-btn
-      v-for="control in toolbarControls"
-      :key="control.content"
-      :content="control.content"
-    >
+    <toolbar-btn v-for="control in toolbarControls" :key="control.content">
       <template v-slot:icon>
         <component :is="control.icon"></component>
       </template>
+      {{ control.content }}
     </toolbar-btn>
   </v-row>
 </template>
