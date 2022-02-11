@@ -1,6 +1,4 @@
 <template>
-  <!-- max-width="400"
-    max-height="276" -->
   <v-card
     class="
       d-flex
@@ -9,21 +7,16 @@
       pa-5
       rounded rounded-sm-sm rounded-xs-sm
     "
+    @click="$emit('openJournal')"
   >
-    <v-card-title
-      class="journal-card__title d-flex flex-nowrap pa-0"
-      @click="$emit('openJournal')"
-    >
+    <v-card-title class="journal-card__title d-flex flex-nowrap pa-0">
       <alert style="position: absolute; top: 20px; right: 20px" />
       <div class="d-flex align-center mr-2">
         <slot name="icon"></slot>
       </div>
       <p class="text-h6" style="word-break: normal; margin: 0">{{ title }}</p>
     </v-card-title>
-    <v-card-text
-      class="journal-card__content pa-0"
-      @click="$emit('openJournal')"
-    >
+    <v-card-text class="journal-card__content pa-0">
       <v-data-table
         :headers="headers"
         :items="meterings"
@@ -73,15 +66,14 @@
       </v-data-table>
     </v-card-text>
     <v-card-actions class="d-flex justify-space-between pa-0">
-      <icon-btn>
+      <icon-btn @click="addMeasuring">
         <template v-slot:content>
           <add class="mr-2" />
-          <!-- class="secondary--text" -->
           <span>Добавить замер</span>
         </template>
       </icon-btn>
       <div>
-        <icon-btn class="mr-3" pop-up-content="Настройки">
+        <icon-btn class="mr-3" pop-up-content="Настройки" @click="showSettings">
           <template v-slot:content>
             <settings />
           </template>
@@ -89,12 +81,16 @@
         <icon-btn
           class="mr-3"
           pop-up-content="Распечатать журнал за текущий месяц"
+          @click="print"
         >
           <template v-slot:content>
             <print />
           </template>
         </icon-btn>
-        <icon-btn pop-up-content="Загрузить журнал за текущий месяц">
+        <icon-btn
+          pop-up-content="Загрузить журнал за текущий месяц"
+          @click="download"
+        >
           <template v-slot:content>
             <download />
           </template>
@@ -179,6 +175,24 @@ export default {
         },
       ],
     };
+  },
+
+  methods: {
+    addMeasuring() {
+      console.log("call add measuring");
+    },
+
+    showSettings() {
+      console.log("call show settings");
+    },
+
+    print() {
+      console.log("call print");
+    },
+
+    download() {
+      console.log("call download");
+    },
   },
 };
 </script>
