@@ -11,10 +11,11 @@
         active-class="expansion-panel--active"
       >
         <v-expansion-panel
-          v-for="(panel, index) in panels"
+          v-for="(panel, index) in navigationPanels"
           :key="index"
           class="expansion-panel"
           style="background-color: #ffffff00 !important"
+          @click="$router.push({ name: panel.name })"
         >
           <v-expansion-panel-header
             color="primary"
@@ -75,12 +76,12 @@
 import { mapGetters, mapActions } from "vuex";
 import { navigation } from "@/util/constants";
 
-import MainIcon from "@/assets/icons/navigation/main.svg";
+import HomeIcon from "@/assets/icons/navigation/main.svg";
 import JournalsIcon from "@/assets/icons/navigation/journals.svg";
 import OrganizationsIcon from "@/assets/icons/navigation/organizations.svg";
 import UsersIcon from "@/assets/icons/navigation/users.svg";
 import NotificationsIcon from "@/assets/icons/navigation/notifications.svg";
-import CheckoutIcon from "@/assets/icons/navigation/checkout.svg";
+import DebuggingIcon from "@/assets/icons/navigation/checkout.svg";
 import ChevronDown from "@/assets/icons/navigation/chevron-down.svg";
 import ActiveJournalPointer from "@/assets/icons/navigation/active-journal-pointer.svg";
 
@@ -90,12 +91,12 @@ export default {
   name: "navigation-list",
 
   components: {
-    MainIcon,
+    HomeIcon,
     JournalsIcon,
     OrganizationsIcon,
     UsersIcon,
     NotificationsIcon,
-    CheckoutIcon,
+    DebuggingIcon,
     ChevronDown,
     ActiveJournalPointer,
   },
@@ -104,53 +105,6 @@ export default {
     activePanelIndex: undefined,
     activeJournalIndex: undefined,
     showHeaders: navigation.defaultState,
-    panels: [
-      {
-        name: "main",
-        title: "Главная",
-        icon: "MainIcon",
-      },
-      {
-        name: "journals",
-        title: "Журналы",
-        icon: "JournalsIcon",
-      },
-      {
-        name: "organizations",
-        title: "Организации",
-        icon: "OrganizationsIcon",
-      },
-      {
-        name: "users",
-        title: "Пользователи",
-        icon: "UsersIcon",
-      },
-      {
-        name: "alerts",
-        title: "Оповещения",
-        icon: "NotificationsIcon",
-      },
-      {
-        name: "debugging",
-        title: "Отладка",
-        icon: "CheckoutIcon",
-      },
-    ],
-
-    panelsContent: {
-      main: [],
-      journals: [
-        {
-          name: "bactericidal",
-          value: "Бактерицидная установка",
-          route: "log-bactericidal",
-        },
-      ],
-      organizations: [],
-      users: [],
-      alerts: [],
-      debugging: [],
-    },
   }),
 
   computed: {
@@ -158,13 +112,29 @@ export default {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
 
+    ...mapGetters("navigation", {
+      navigationPanels: ["GET_NAVIGATION_PANELS_LIST"],
+    }),
+
+    panelsContent() {
+      const content = {};
+      this.navigationPanels.forEach((panel) => {
+        const data =
+          this.$store.getters[
+            `${panel.name.toLowerCase()}/GET_${panel.name.toUpperCase()}_ITEMS_LIST`
+          ];
+        content[panel.name] = Array.from(data);
+      });
+      return content;
+    },
+
     activePanel() {
       if (
         !this.isNavigationExpanded ||
         (!this.activePanelIndex && this.activePanelIndex !== 0)
       )
         return;
-      return this.panels[this.activePanelIndex].title;
+      return this.navigationPanels[this.activePanelIndex].name;
     },
 
     activeJournal() {
@@ -173,13 +143,15 @@ export default {
         (!this.activeJournalIndex && this.activeJournalIndex !== 0)
       )
         return;
-      return this.panelsContent[this.activeJournalIndex];
+      return this.panelsContent[this.activePanel][this.activeJournalIndex].name;
     },
   },
 
   methods: {
-    ...mapActions("navigation", ["SET_NAVIGATION_ACTIVE_PANEL"]),
-    ...mapActions("navigation", ["SET_NAVIGATION_ACTIVE_JOURNAL"]),
+    ...mapActions("navigation", [
+      "SET_NAVIGATION_ACTIVE_PANEL",
+      "SET_NAVIGATION_ACTIVE_JOURNAL",
+    ]),
   },
 
   mounted() {},
