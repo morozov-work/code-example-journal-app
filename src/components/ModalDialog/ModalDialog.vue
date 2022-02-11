@@ -1,6 +1,11 @@
 <template>
-  <v-dialog v-model="dialog" :persistent="persistent" max-width="800">
-    <v-card>
+  <v-dialog
+    v-model="dialog"
+    :persistent="persistent"
+    :max-width="maxWidth"
+    content-class="modal-dialog"
+  >
+    <v-card class="modal-dialog__card">
       <v-card-title>
         <span>{{ title }}</span>
       </v-card-title>
@@ -37,6 +42,11 @@ export default {
     persistent: {
       type: Boolean,
       default: true,
+    },
+
+    maxWidth: {
+      type: String,
+      default: "800",
     },
   },
   data() {
