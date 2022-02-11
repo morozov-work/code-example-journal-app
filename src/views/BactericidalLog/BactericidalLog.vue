@@ -1,86 +1,75 @@
 <template>
-  <main-layout>
-    <template v-slot:content>
-      <v-data-table
-        dense
-        class="elevation-1"
-        :headers="headers"
-        :items="items"
-        sort-by="createdAt"
-        :single-expand="true"
-        :expanded.sync="expanded"
-        item-key="key"
-        show-expand
-        @update:expanded="onExpand"
-      >
-        <template v-slot:top>
-          <v-toolbar flat>
-            <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <action-btn @click="addItem"> Новая запись</action-btn>
-            <modal-dialog :dialog="addDialog" title="Редактирование / Создание">
-              <template v-slot:content>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="editedItem.createdAt"
-                      label="Создано"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </template>
-              <template v-slot:controls>
-                <div>
-                  <action-btn @click="close"> Отмена </action-btn>
-                  <action-btn @click="save"> Сохранить </action-btn>
-                </div>
-              </template>
-            </modal-dialog>
-            <modal-dialog :dialog="dialogDelete" max-width="400">
-              <template v-slot:content>
-                <v-row class="justify-center">
-                  <span class="text-h5">Удалить запись?</span>
-                </v-row>
-              </template>
-              <template v-slot:controls>
-                <div>
-                  <action-btn @click="closeDelete"> Отмена </action-btn>
-                  <action-btn @click="deleteItemConfirm"> OK </action-btn>
-                </div>
-              </template>
-            </modal-dialog>
-          </v-toolbar>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-        </template>
-        <template v-slot:expanded-item="{ headers }">
-          <td :colspan="headers.length">
-            <h3>Информация</h3>
-            <br />
-            Всего часов: {{ expandedItemDetails.hours }}<br />
-            Включена: {{ expandedItemDetails.enabled ? "да" : "нет" }}<br />
-            Название прибора: {{ expandedItemDetails.name }}<br />
-            Помещение: {{ expandedItemDetails.roomName }}
-          </td>
-        </template>
-      </v-data-table>
+  <v-data-table
+    dense
+    class="elevation-1"
+    :headers="headers"
+    :items="items"
+    sort-by="createdAt"
+    :single-expand="true"
+    :expanded.sync="expanded"
+    item-key="key"
+    show-expand
+    @update:expanded="onExpand"
+  >
+    <template v-slot:top>
+      <v-toolbar flat>
+        <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <action-btn @click="addItem"> Новая запись</action-btn>
+        <modal-dialog :dialog="addDialog" title="Редактирование / Создание">
+          <template v-slot:content>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.createdAt"
+                  label="Создано"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </template>
+          <template v-slot:controls>
+            <div>
+              <action-btn @click="close"> Отмена </action-btn>
+              <action-btn @click="save"> Сохранить </action-btn>
+            </div>
+          </template>
+        </modal-dialog>
+        <modal-dialog :dialog="dialogDelete" max-width="400">
+          <template v-slot:content>
+            <v-row class="justify-center">
+              <span class="text-h5">Удалить запись?</span>
+            </v-row>
+          </template>
+          <template v-slot:controls>
+            <div>
+              <action-btn @click="closeDelete"> Отмена </action-btn>
+              <action-btn @click="deleteItemConfirm"> OK </action-btn>
+            </div>
+          </template>
+        </modal-dialog>
+      </v-toolbar>
     </template>
-  </main-layout>
+    <template v-slot:item.actions="{ item }">
+      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+    </template>
+    <template v-slot:expanded-item="{ headers }">
+      <td :colspan="headers.length">
+        <h3>Информация</h3>
+        <br />
+        Всего часов: {{ expandedItemDetails.hours }}<br />
+        Включена: {{ expandedItemDetails.enabled ? "да" : "нет" }}<br />
+        Название прибора: {{ expandedItemDetails.name }}<br />
+        Помещение: {{ expandedItemDetails.roomName }}
+      </td>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
-import MainLayout from "@/layouts/MainLayout/MainLayout.vue";
 import { getResource, getBactericidalLogs } from "@/api/bactericidalLogs";
 
 export default {
-  components: {
-    MainLayout,
-  },
-
   name: "bactericidal-log",
 
   data() {

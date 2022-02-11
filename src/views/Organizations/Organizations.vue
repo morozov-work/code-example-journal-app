@@ -1,10 +1,10 @@
 <template>
-  <span>HOME</span>
+  <span>ORGANIZATIONS</span>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  name: "Organizations",
 
   data() {
     return {};

@@ -1,10 +1,10 @@
 <template>
-  <span>HOME</span>
+  <span>NOTIFICATIONS</span>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  name: "Notifications",
 
   data() {
     return {};

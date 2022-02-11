@@ -1,10 +1,10 @@
 <template>
-  <span>HOME</span>
+  <span>USERS</span>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  name: "Users",
 
   data() {
     return {};

@@ -13,7 +13,7 @@
     <navigation></navigation>
     <v-main :style="{ 'padding-left': viewportShift }">
       <v-container fluid class="pt-0 pr-10 pb-10 pl-10">
-        <slot name="content"></slot>
+        <router-view></router-view>
       </v-container>
     </v-main>
   </v-app>
