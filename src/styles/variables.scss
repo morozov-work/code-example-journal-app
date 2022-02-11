@@ -47,6 +47,7 @@ $gray-light:    #F4F4F4 !important;
 
 // border-radius
 $border-radius-root: 25px;
+$border-radius-phone: 15px !important; // custom
 
 $rounded: (
   0: 0,
@@ -60,7 +61,7 @@ $rounded: (
 $box-shadow-root: 0px 4px 20px rgba(0, 0, 0, 0.1) !important; //custom
 
 // v-btn
-$btn-border-radius: none;
+$btn-border-radius: 0;
 
 // v-text-field
 $text-field-border-radius: 8px;
