@@ -7,7 +7,7 @@
     @click.stop="$emit('click')"
   >
     <slot name="content"></slot>
-    <pop-up :content="popUpContent" v-show="showPopUp && popUpContent" />
+    <pop-up :content="popUpContent" v-if="showPopUp && popUpContent" />
   </v-btn>
 </template>
 
