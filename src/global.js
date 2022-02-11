@@ -1,8 +1,10 @@
 import Vue from "vue";
 
 const components = {
-  ModalDialog: () => import("@/components/ModalDialog/ModalDialog.vue"),
+  ActionBtn: () => import("@/components/controls/ActionBtn/ActionBtn.vue"),
+  IconBtn: () => import("@/components/controls/IconBtn/IconBtn.vue"),
   PopUp: () => import("@/components/controls/PopUp/PopUp.vue"),
+  ModalDialog: () => import("@/components/ModalDialog/ModalDialog.vue"),
 };
 
 export function registerGlobalComponents() {
