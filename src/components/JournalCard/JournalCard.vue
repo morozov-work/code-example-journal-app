@@ -7,7 +7,7 @@
       pa-5
       rounded rounded-sm-sm rounded-xs-sm
     "
-    @click="$emit('openJournal')"
+    @click="$emit('open', { component, route })"
   >
     <v-card-title class="journal-card__title d-flex flex-nowrap pa-0">
       <alert style="position: absolute; top: 20px; right: 20px" />
@@ -123,7 +123,18 @@ export default {
 
   name: "journal-card",
   props: {
-    title: String,
+    title: {
+      type: String,
+      required: true,
+    },
+    component: {
+      type: String,
+      required: true,
+    },
+    route: {
+      type: String,
+      required: true,
+    },
   },
 
   data() {
@@ -181,15 +192,12 @@ export default {
     addMeasuring() {
       console.log("call add measuring");
     },
-
     showSettings() {
       console.log("call show settings");
     },
-
     print() {
       console.log("call print");
     },
-
     download() {
       console.log("call download");
     },

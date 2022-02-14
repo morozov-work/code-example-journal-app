@@ -5,21 +5,19 @@
       <heading />
       <div class="mt-6" style="display: flex; flex-wrap: wrap">
         <journal-card
-          title="Журнал бактерицидных ламп"
-          @openJournal="openJournal"
-        >
-          <template v-slot:icon>
-            <germicidal />
-          </template>
-        </journal-card>
-        <v-card
-          v-for="(journal, index) in journals"
+          v-for="(journal, index) in journalsList"
           :key="index"
+          :title="journal.title"
+          :component="journal.component"
+          :route="journal.route"
           width="400"
           height="276"
+          @open="openJournal"
         >
-          {{ journal }}
-        </v-card>
+          <template v-slot:icon>
+            <component :is="journal.icon" />
+          </template>
+        </journal-card>
         <new-journal></new-journal>
       </div>
     </div>
@@ -32,7 +30,6 @@ import Heading from "@/components/Heading/Heading.vue";
 import JournalCard from "@/components/JournalCard/JournalCard.vue";
 import NewJournal from "@/components/NewJournal/NewJournal.vue";
 
-// import TemperatureHumidity from "@/assets/icons/journals/temperature-humidity.svg";
 import Germicidal from "@/assets/icons/journals/germicidal.svg";
 
 export default {
@@ -41,35 +38,21 @@ export default {
     Heading,
     JournalCard,
     NewJournal,
-    // TemperatureHumidity,
     Germicidal,
   },
 
-  name: "Journals",
+  name: "journals",
 
-  data() {
-    return {
-      journals: [
-        "Бактерицидная установка",
-        "Температура сотрудников",
-        "Дезинсекция и дератизация",
-        "Дезинфицирующие средства и дезинфекционные работы",
-        "Скоропортящаяся пищевая продукция",
-        "Температурный режим холодильного оборудования",
-        "Температура и влажность склада",
-        "Дефростация продуктов",
-        "Фритюрные жиры",
-        "Бракеражный журнал",
-        "Гигиенический журнал здоровья",
-      ],
-    };
+  computed: {
+    journalsList() {
+      return this.$store.getters["journals/GET_JOURNALS_ITEMS_LIST"];
+    },
   },
 
-  computed: {},
-
   methods: {
-    openJournal() {
-      this.$router.push({ name: "Journal" });
+    openJournal(params) {
+      const { component, route } = params;
+      this.$router.push({ name: "journal", params: { component, route } });
     },
   },
 };
