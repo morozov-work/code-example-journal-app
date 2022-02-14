@@ -16,13 +16,37 @@
         <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
         <v-spacer></v-spacer>
         <action-btn @click="addItem"> Новая запись</action-btn>
-        <modal-dialog :dialog="addDialog" title="Редактирование / Создание">
+        <modal-dialog :dialog="addDialog" title="Добавить замер">
           <template v-slot:content>
             <v-row>
               <v-col cols="12" sm="6" md="4">
+                <date-input
+                  v-model="editedItem.fixedDate"
+                  label="Дата фиксации"
+                ></date-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <time-input
+                  v-model="editedItem.timeStart"
+                  label="Время начала"
+                ></time-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <time-input
+                  v-model="editedItem.timeEnd"
+                  label="Время окончания"
+                ></time-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
                 <v-text-field
-                  v-model="editedItem.createdAt"
-                  label="Создано"
+                  v-model="editedItem.room"
+                  label="Комната"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="editedItem.lamp"
+                  label="Лампа"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -67,7 +91,8 @@
 </template>
 
 <script>
-import { getResource, getBactericidalLogs } from "@/api/bactericidalLogs";
+import { getResource, getBactericidalLog } from "@/api/bactericidalLog";
+import { ISODateTo, getISODate } from "@/util/date";
 
 export default {
   name: "bactericidal-log",
@@ -77,7 +102,7 @@ export default {
       logs: [],
       headers: [
         {
-          text: "Создано",
+          text: "Дата создания",
           align: "start",
           sortable: false,
           value: "createdAt",
@@ -87,7 +112,7 @@ export default {
         { text: "Время начала", value: "timeStart" },
         { text: "Время окончания", value: "timeEnd" },
         { text: "Всего", value: "total" },
-        { text: "Обновлено", value: "updatedAt" },
+        { text: "Дата обновления", value: "updatedAt" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       items: [],
@@ -96,23 +121,41 @@ export default {
       dialogDelete: false,
       editedIndex: -1,
       editedItem: {
+        "@id": "",
+        "@type": "",
         createdAt: "",
+        createdBy: "",
         delta: "",
+        department: "",
         fixedDate: "",
-        timeStart: "",
+        id: "",
+        lamp: "",
+        responsible: "",
+        room: "",
         timeEnd: "",
+        timeStart: "",
         total: "",
         updatedAt: "",
+        updatedBy: "",
         key: "",
       },
       defaultItem: {
+        "@id": "",
+        "@type": "",
         createdAt: "",
+        createdBy: "",
         delta: "",
+        department: "",
         fixedDate: "",
-        timeStart: "",
+        id: "",
+        lamp: "",
+        responsible: "",
+        room: "",
         timeEnd: "",
+        timeStart: "",
         total: "",
         updatedAt: "",
+        updatedBy: "",
         key: "",
       },
       expandedItem: {},
@@ -127,30 +170,8 @@ export default {
 
   methods: {
     async getData() {
-      const response = await getBactericidalLogs();
+      const response = await getBactericidalLog();
       this.logs = response.data["hydra:member"];
-    },
-
-    formatDate(dateStr, format) {
-      const options = {
-        all: {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        },
-        date: {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        },
-        time: { hour: "2-digit", minute: "2-digit" },
-      };
-      const date = new Date(dateStr);
-      return format === "all" || format === "date"
-        ? date.toLocaleDateString("ru-RU", options[format])
-        : date.toLocaleTimeString();
     },
 
     addItem() {
@@ -191,13 +212,32 @@ export default {
     },
 
     save() {
-      if (this.editedIndex > -1) {
-        Object.assign(this.items[this.editedIndex], this.editedItem);
-      } else {
-        this.editedItem.key = this.items.length;
-        this.items.push(this.editedItem);
-      }
+      this.editedIndex > -1 ? this.saveChanges() : this.saveCreatedItem();
       this.close();
+    },
+
+    saveChanges() {
+      Object.assign(this.items[this.editedIndex], this.editedItem);
+    },
+
+    saveCreatedItem() {
+      this.editedItem.key = this.items.length;
+      this.items.push(this.editedItem);
+      const a = this.postNewItem(this.editedItem);
+      console.log(a);
+    },
+
+    postNewItem(item) {
+      return {
+        room: item.room,
+        fixedDate: getISODate(item.fixedDate),
+        lamp: item.lamp,
+        timeStart: getISODate(item.timeStart),
+        timeEnd: getISODate(item.timeEnd),
+        total: 0,
+        responsible: "string",
+        department: "string",
+      };
     },
 
     async onExpand(item) {
@@ -233,13 +273,13 @@ export default {
     this.items = this.logs.map((log, index) => {
       return {
         key: index,
-        createdAt: this.formatDate(log.createdAt, "all"),
+        createdAt: ISODateTo(log.createdAt, "datetime"),
         delta: log.delta,
-        fixedDate: this.formatDate(log.fixedDate, "date"),
-        timeStart: this.formatDate(log.timeStart, "time"),
-        timeEnd: this.formatDate(log.timeEnd, "time"),
+        fixedDate: ISODateTo(log.fixedDate, "date"),
+        timeStart: ISODateTo(log.timeStart, "time"),
+        timeEnd: ISODateTo(log.timeEnd, "time"),
         total: log.total,
-        updatedAt: this.formatDate(log.updatedAt, "all"),
+        updatedAt: ISODateTo(log.updatedAt, "datetime"),
         lamp: log.lamp,
         room: log.room,
       };
