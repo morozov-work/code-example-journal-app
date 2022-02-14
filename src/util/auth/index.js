@@ -13,7 +13,7 @@ const auth = {
       if (response.data) {
         setCookie(AUTH_TOKEN_NAME, response.data.token);
         store.commit("auth/SET_AUTH_USER", true);
-        router.push({ name: "Home" });
+        router.push({ name: "home" });
       }
     } catch (e) {
       console.log("Login attempt failed.");
@@ -43,7 +43,7 @@ const auth = {
   logout: async () => {
     await logout();
     store.commit("auth/SET_AUTH_USER", false);
-    router.push({ name: "Login" });
+    router.push({ name: "login" });
   },
 
   // регистрация - пока нет.

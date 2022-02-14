@@ -9,6 +9,7 @@ import Resetting from "@/views/Resetting.vue";
 import PageNotFound from "@/views/PageNotFound/PageNotFound.vue";
 
 import MainLayout from "@/layouts/MainLayout/MainLayout.vue";
+
 import Home from "@/views/Home/Home.vue";
 import Journals from "@/views/Journals/Journals.vue";
 import Organizations from "@/views/Organizations/Organizations.vue";
@@ -16,24 +17,24 @@ import Users from "@/views/Users/Users.vue";
 import Notifications from "@/views/Notifications/Notifications.vue";
 import Debugging from "@/views/Debugging/Debugging.vue";
 
-import BactericidalLog from "@/views/BactericidalLog/BactericidalLog.vue";
+import Journal from "@/components/Journal/Journal.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/login",
-    name: "Login",
+    name: "login",
     component: Login,
   },
   {
     path: "/register",
-    name: "Register",
+    name: "register",
     component: Register,
   },
   {
     path: "/resetting/request",
-    name: "Resetting",
+    name: "resetting",
     component: Resetting,
   },
   {
@@ -51,7 +52,7 @@ const routes = [
     children: [
       {
         path: "/",
-        name: "Home",
+        name: "home",
         component: Home,
         meta: { requiresAuth: true },
       },
@@ -61,38 +62,39 @@ const routes = [
       },
       {
         path: "/journals",
-        name: "Journals",
+        name: "journals",
         component: Journals,
         meta: { requiresAuth: true },
       },
       {
+        path: "/journals/:route",
+        name: "journal",
+        component: Journal,
+        props: true,
+        meta: { requiresAuth: true },
+      },
+      {
         path: "/organizations",
-        name: "Organizations",
+        name: "organizations",
         component: Organizations,
         meta: { requiresAuth: true },
       },
       {
         path: "/users",
-        name: "Users",
+        name: "users",
         component: Users,
         meta: { requiresAuth: true },
       },
       {
         path: "/notifications",
-        name: "Notifications",
+        name: "notifications",
         component: Notifications,
         meta: { requiresAuth: true },
       },
       {
         path: "/debugging",
-        name: "Debugging",
+        name: "debugging",
         component: Debugging,
-        meta: { requiresAuth: true },
-      },
-      {
-        name: "Journal",
-        path: "/log-bactericidallog",
-        component: BactericidalLog,
         meta: { requiresAuth: true },
       },
     ],
