@@ -15,7 +15,7 @@
           :key="index"
           class="expansion-panel"
           style="background-color: #ffffff00 !important"
-          @click="$router.push({ name: panel.name })"
+          @click="selectPanel(panel.name)"
         >
           <v-expansion-panel-header
             color="primary"
@@ -60,7 +60,7 @@
                     <active-journal-pointer
                       class="journal-header__active-journal-pointer"
                     />
-                    <span>{{ item.value }}</span>
+                    <span>{{ item.title }}</span>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import { navigation } from "@/util/constants";
 
 import HomeIcon from "@/assets/icons/navigation/main.svg";
@@ -148,13 +148,10 @@ export default {
   },
 
   methods: {
-    ...mapActions("navigation", [
-      "SET_NAVIGATION_ACTIVE_PANEL",
-      "SET_NAVIGATION_ACTIVE_JOURNAL",
-    ]),
+    selectPanel(name) {
+      this.$router.push({ name });
+    },
   },
-
-  mounted() {},
 
   watch: {
     isNavigationExpanded(newVal, oldVal) {
@@ -170,11 +167,11 @@ export default {
     },
 
     activePanel(newVal) {
-      this["SET_NAVIGATION_ACTIVE_PANEL"](newVal);
+      this.$store.commit("navigation/SET_NAVIGATION_ACTIVE_PANEL", newVal);
     },
 
     activeJournal(newVal) {
-      this["SET_NAVIGATION_ACTIVE_JOURNAL"](newVal);
+      this.$store.commit("navigation/SET_NAVIGATION_ACTIVE_JOURNAL", newVal);
     },
   },
 };
