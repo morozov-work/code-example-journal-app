@@ -6,8 +6,12 @@
           <user-icon />
         </v-col>
         <v-col cols="9" align-self="center">
-          <v-row align="center" justify="start">
-            <span class="navigation-user-menu__name">username</span>
+          <v-row
+            class="navigation-user-menu__name"
+            align="center"
+            justify="start"
+          >
+            <span class="navigation-user-menu__name-text">username</span>
             <chevron-down class="navigation-user-menu__button" />
           </v-row>
           <v-row class="navigation-user-menu__role">
