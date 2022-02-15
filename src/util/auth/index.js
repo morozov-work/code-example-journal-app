@@ -7,6 +7,8 @@ import { AUTH_TOKEN_NAME } from "@/util/constants";
 const auth = {
   checkAuth: () => store.getters["auth/GET_AUTH_USER"],
 
+  isFirstLoad: () => !store.getters["auth/GET_IS_TOKEN_CHECKED"],
+
   login: async (user) => {
     try {
       const response = await login(user);

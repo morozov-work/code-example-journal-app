@@ -1,4 +1,6 @@
 import { axios } from ".";
+import { getCookie } from "@/util/cookie";
+import { AUTH_TOKEN_NAME } from "@/util/constants";
 
 const urls = Object.freeze({
   API_LOGIN_URL: "/api_user_authenticate", // method: "POST"
@@ -6,6 +8,7 @@ const urls = Object.freeze({
   API_REFRESH_URL: "/api_user_authenticate", // method: "POST"
   API_LOGOUT_URL: "/api_user_authenticate", // method: "POST"
   API_REGISTRATION_URL: "/api_user_authenticate", // method: "POST"
+  API_TEST_TOKEN_URL: "/api/bactericidal_logs?page=1", // method: "GET"
 });
 
 export function login(user) {
@@ -30,4 +33,14 @@ export function registration(user) {
   return axios.post(urls.API_REGISTRATON_URL, user, {
     withCredentials: true,
   });
+}
+
+export function checkToken() {
+  const AUTH_TOKEN = getCookie(AUTH_TOKEN_NAME);
+  const config = {
+    headers: {
+      Authorization: `Bearer ${AUTH_TOKEN}`,
+    },
+  };
+  axios.get(urls.API_TEST_TOKEN_URL, config);
 }

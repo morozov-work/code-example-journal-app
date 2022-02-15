@@ -29,7 +29,7 @@ axios.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       store.commit("auth/SET_AUTH_USER", false);
-      router.push({ name: "Login" });
+      router.push({ name: "login" });
     }
   }
 );

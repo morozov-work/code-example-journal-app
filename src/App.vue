@@ -5,6 +5,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { findDeviceType } from "@/util/utils";
+import { checkToken } from "@/api/auth";
 
 export default {
   name: "App",
@@ -27,6 +28,17 @@ export default {
     isNavigationExpanded() {
       this.$store.commit("common/SET_VIEWPORT_SHIFT");
     },
+  },
+
+  async beforeMount() {
+    try {
+      this.$store.commit("auth/SET_IS_TOKEN_CHECKED");
+      await checkToken();
+      this.$store.commit("auth/SET_AUTH_USER", true);
+      this.$router.push({ name: this.$route.name });
+    } catch (e) {
+      console.log(e);
+    }
   },
 
   mounted() {
