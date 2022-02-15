@@ -101,9 +101,45 @@ const routes = [
   },
 ];
 
+/*
+ * Убираем ошибку о предотвращении избыточной навигации
+ */
+
+const originalPush = VueRouter.prototype.push;
+
+VueRouter.prototype.push = function push(location, onComplete, onAbort) {
+  const result = originalPush.call(this, location, onComplete, onAbort);
+  if (result) {
+    return result.catch((err) => {
+      if (err.name !== "NavigationDuplicated") {
+        throw err;
+      }
+    });
+  }
+  return result;
+};
+
+const originalReplace = VueRouter.prototype.replace;
+
+VueRouter.prototype.replace = function replace(location, onComplete, onAbort) {
+  const result = originalReplace.call(this, location, onComplete, onAbort);
+  if (result) {
+    return result.catch((err) => {
+      if (err.name !== "NavigationDuplicated") {
+        throw err;
+      }
+    });
+  }
+  return result;
+};
+
 const router = new VueRouter({
   routes,
 });
+
+/*
+ * Проверяем авторизован ли пользователь перед переходом по маршрутам
+ */
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
