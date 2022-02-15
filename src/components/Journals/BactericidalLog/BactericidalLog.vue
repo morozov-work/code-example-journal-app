@@ -91,7 +91,14 @@
 </template>
 
 <script>
-import { getResource, getBactericidalLog } from "@/api/bactericidalLog";
+import {
+  getResource,
+  getBactericidalLog,
+  // getLamps,
+  // getRooms,
+  // getDepartments,
+  // getEmployees,
+} from "@/api/bactericidalLog";
 import { ISODateTo, getISODate } from "@/util/date";
 
 export default {
@@ -100,6 +107,10 @@ export default {
   data() {
     return {
       logs: [],
+      lamps: [],
+      rooms: [],
+      departments: [],
+      employees: [],
       headers: [
         {
           text: "Дата создания",
@@ -270,6 +281,10 @@ export default {
 
   async created() {
     await this.getData();
+    // this.lamps = await getLamps();
+    // this.rooms = await getRooms();
+    // this.departments = await getDepartments();
+    // this.employees = await getEmployees();
     this.items = this.logs.map((log, index) => {
       return {
         key: index,
