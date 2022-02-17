@@ -17,6 +17,11 @@ export function getLamps(id = null) {
 }
 
 export function getRooms(id = null) {
+  const url = id ? `/api/rooms/${id}` : "/api/rooms";
+  return axios.get(url);
+}
+
+export function getRoomIndastrials(id = null) {
   const url = id ? `/api/room_industrials/${id}` : "/api/room_industrials";
   return axios.get(url);
 }
