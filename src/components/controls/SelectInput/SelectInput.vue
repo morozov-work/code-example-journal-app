@@ -7,6 +7,7 @@
     :label="label"
     :required="required"
     :menu-props="{ contentClass: 'select-input' }"
+    :rules="rules"
     @input="onInput"
   ></v-select>
 </template>
@@ -45,6 +46,11 @@ export default {
     required: {
       type: Boolean,
       default: false,
+    },
+
+    rules: {
+      type: Array,
+      required: false,
     },
   },
 

@@ -13,6 +13,7 @@
         prepend-icon="mdi-calendar"
         readonly
         :required="required"
+        :rules="rules"
         v-bind="attrs"
         v-on="on"
       ></v-text-field>
@@ -40,6 +41,11 @@ export default {
     required: {
       type: Boolean,
       default: false,
+    },
+
+    rules: {
+      type: Array,
+      required: false,
     },
   },
 
