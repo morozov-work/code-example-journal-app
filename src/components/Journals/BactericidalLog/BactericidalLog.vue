@@ -20,34 +20,52 @@
           <template v-slot:content>
             <v-row>
               <v-col cols="12" sm="6" md="4">
+                <select-input
+                  v-model="editedItem.department"
+                  :items="departments"
+                  item-text="name"
+                  item-value="@id"
+                  label="Отделение"
+                ></select-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <select-input
+                  v-model="editedItem.room"
+                  :items="rooms"
+                  item-text="name"
+                  item-value="@id"
+                  label="Помещение"
+                ></select-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <select-input
+                  v-model="editedItem.lamp"
+                  :items="lamps"
+                  item-text="name"
+                  item-value="@id"
+                  label="Лампа"
+                ></select-input>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
                 <date-input
                   v-model="editedItem.fixedDate"
                   label="Дата фиксации"
+                  required
                 ></date-input>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <time-input
                   v-model="editedItem.timeStart"
+                  :date="editedItem.fixedDate"
                   label="Время начала"
                 ></time-input>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <time-input
                   v-model="editedItem.timeEnd"
+                  :date="editedItem.fixedDate"
                   label="Время окончания"
                 ></time-input>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.room"
-                  label="Комната"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-text-field
-                  v-model="editedItem.lamp"
-                  label="Лампа"
-                ></v-text-field>
               </v-col>
             </v-row>
           </template>
@@ -94,12 +112,12 @@
 import {
   getResource,
   getBactericidalLog,
-  // getLamps,
-  // getRooms,
-  // getDepartments,
-  // getEmployees,
+  getLamps,
+  getRooms,
+  getRoomIndastrials,
+  getDepartments,
 } from "@/api/bactericidalLog";
-import { ISODateTo, getISODate } from "@/util/date";
+import { ISODateTo } from "@/util/date";
 
 export default {
   name: "bactericidal-log",
@@ -109,21 +127,22 @@ export default {
       logs: [],
       lamps: [],
       rooms: [],
+      roomIndastrials: [],
       departments: [],
       employees: [],
       headers: [
-        {
-          text: "Дата создания",
-          align: "start",
-          sortable: false,
-          value: "createdAt",
-        },
+        // {
+        //   text: "Дата создания",
+        //   align: "start",
+        //   sortable: false,
+        //   value: "createdAt",
+        // },
         { text: "Изменение", value: "delta" },
         { text: "Дата фиксации", value: "fixedDate" },
         { text: "Время начала", value: "timeStart" },
         { text: "Время окончания", value: "timeEnd" },
         { text: "Всего", value: "total" },
-        { text: "Дата обновления", value: "updatedAt" },
+        // { text: "Дата обновления", value: "updatedAt" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       items: [],
@@ -234,20 +253,29 @@ export default {
     saveCreatedItem() {
       this.editedItem.key = this.items.length;
       this.items.push(this.editedItem);
-      const a = this.postNewItem(this.editedItem);
-      console.log(a);
+      this.postNewItem(this.editedItem);
     },
 
     postNewItem(item) {
-      return {
+      console.log({
         room: item.room,
-        fixedDate: getISODate(item.fixedDate),
+        fixedDate: item.fixedDate,
         lamp: item.lamp,
-        timeStart: getISODate(item.timeStart),
-        timeEnd: getISODate(item.timeEnd),
+        timeStart: item.timeStart,
+        timeEnd: item.timeEnd,
         total: 0,
         responsible: "string",
-        department: "string",
+        department: item.department,
+      });
+      return {
+        room: item.room,
+        fixedDate: item.fixedDate,
+        lamp: item.lamp,
+        timeStart: item.timeStart,
+        timeEnd: item.timeEnd,
+        total: 0,
+        responsible: "string",
+        department: item.department,
       };
     },
 
@@ -281,10 +309,14 @@ export default {
 
   async created() {
     await this.getData();
-    // this.lamps = await getLamps();
-    // this.rooms = await getRooms();
-    // this.departments = await getDepartments();
-    // this.employees = await getEmployees();
+    this.lamps = await getLamps().then((r) => r.data["hydra:member"]);
+    this.rooms = await getRooms().then((r) => r.data["hydra:member"]);
+    this.roomIndastrials = await getRoomIndastrials().then(
+      (r) => r.data["hydra:member"]
+    );
+    this.departments = await getDepartments().then(
+      (r) => r.data["hydra:member"]
+    );
     this.items = this.logs.map((log, index) => {
       return {
         key: index,
