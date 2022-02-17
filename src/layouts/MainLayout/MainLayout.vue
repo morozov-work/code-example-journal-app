@@ -12,7 +12,7 @@
     </v-app-bar>
     <navigation></navigation>
     <v-main :style="{ 'padding-left': viewportShift }">
-      <v-container fluid class="pt-0 pr-10 pb-10 pl-10">
+      <v-container fluid class="pt-0 pr-4 pr-sm-10 pb-4 pb-sm-10 pl-4 pl-sm-10">
         <router-view></router-view>
       </v-container>
     </v-main>
