@@ -1,7 +1,3 @@
-function getISODate(date) {
-  return new Date(Date.parse(date)).toISOString();
-}
-
 function ISODateTo(dateStr, format) {
   const options = {
     datetime: {
@@ -29,4 +25,4 @@ function ISODateTo(dateStr, format) {
   }
 }
 
-export { ISODateTo, getISODate };
+export { ISODateTo };

@@ -1,29 +1,27 @@
 <template>
   <v-menu
-    ref="menu"
     v-model="menu"
-    :close-on-content-click="false"
-    :return-value.sync="date"
     transition="scale-transition"
     offset-y
+    max-width="290px"
     min-width="auto"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        :value="date"
+        v-model="date"
         :label="label"
         prepend-icon="mdi-calendar"
         readonly
+        :required="required"
         v-bind="attrs"
-        @input="$emit('dateChange', $event.target.value)"
         v-on="on"
       ></v-text-field>
     </template>
-    <v-date-picker v-model="date" no-title scrollable>
-      <v-spacer></v-spacer>
-      <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
-      <v-btn text color="primary" @click="$refs.menu.save(date)"> OK </v-btn>
-    </v-date-picker>
+    <v-date-picker
+      v-model="date"
+      no-title
+      @input="menu = false"
+    ></v-date-picker>
   </v-menu>
 </template>
 
@@ -38,6 +36,10 @@ export default {
     value: {
       type: String,
       required: true,
+    },
+    required: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -55,11 +57,21 @@ export default {
   computed: {
     date: {
       get: function () {
-        return this.value;
+        return this.dateFormatted(this.value);
       },
       set: function (value) {
-        this.$emit("dateChange", value);
+        this.$emit("dateChange", this.ISODate(value));
       },
+    },
+  },
+
+  methods: {
+    dateFormatted(date) {
+      return date.slice(0, 10);
+    },
+
+    ISODate(date) {
+      return new Date(Date.parse(date)).toISOString();
     },
   },
 };
