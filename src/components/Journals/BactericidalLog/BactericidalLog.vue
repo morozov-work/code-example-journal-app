@@ -1,111 +1,138 @@
 <template>
-  <v-data-table
-    dense
-    class="elevation-1"
-    :headers="headers"
-    :items="items"
-    sort-by="createdAt"
-    :single-expand="true"
-    :expanded.sync="expanded"
-    item-key="key"
-    show-expand
-    @update:expanded="onExpand"
-  >
-    <template v-slot:top>
-      <v-toolbar flat>
-        <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <action-btn @click="addItem"> Новая запись</action-btn>
-        <modal-dialog :dialog="addDialog" title="Добавить замер">
-          <template v-slot:content>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <select-input
-                  v-model="editedItem.department"
-                  :items="departments"
-                  item-text="name"
-                  item-value="@id"
-                  label="Отделение"
-                ></select-input>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <select-input
-                  v-model="editedItem.room"
-                  :items="rooms"
-                  item-text="name"
-                  item-value="@id"
-                  label="Помещение"
-                ></select-input>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <select-input
-                  v-model="editedItem.lamp"
-                  :items="lamps"
-                  item-text="name"
-                  item-value="@id"
-                  label="Лампа"
-                ></select-input>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <date-input
-                  v-model="editedItem.fixedDate"
-                  label="Дата фиксации"
-                  required
-                ></date-input>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <time-input
-                  v-model="editedItem.timeStart"
-                  :date="editedItem.fixedDate"
-                  label="Время начала"
-                ></time-input>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <time-input
-                  v-model="editedItem.timeEnd"
-                  :date="editedItem.fixedDate"
-                  label="Время окончания"
-                ></time-input>
-              </v-col>
-            </v-row>
-          </template>
-          <template v-slot:controls>
-            <div>
-              <action-btn @click="close"> Отмена </action-btn>
-              <action-btn @click="save"> Сохранить </action-btn>
-            </div>
-          </template>
-        </modal-dialog>
-        <modal-dialog :dialog="dialogDelete" max-width="400">
-          <template v-slot:content>
-            <v-row class="justify-center">
-              <span class="text-h5">Удалить запись?</span>
-            </v-row>
-          </template>
-          <template v-slot:controls>
-            <div>
-              <action-btn @click="closeDelete"> Отмена </action-btn>
-              <action-btn @click="deleteItemConfirm"> OK </action-btn>
-            </div>
-          </template>
-        </modal-dialog>
-      </v-toolbar>
-    </template>
-    <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
-      <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
-    </template>
-    <template v-slot:expanded-item="{ headers }">
-      <td :colspan="headers.length">
-        <h3>Информация</h3>
-        <br />
-        Всего часов: {{ expandedItemDetails.hours }}<br />
-        Включена: {{ expandedItemDetails.enabled ? "да" : "нет" }}<br />
-        Название прибора: {{ expandedItemDetails.name }}<br />
-        Помещение: {{ expandedItemDetails.roomName }}
-      </td>
-    </template>
-  </v-data-table>
+  <div>
+    <v-data-table
+      dense
+      class="elevation-1"
+      :headers="headers"
+      :items="items"
+      sort-by="createdAt"
+      :single-expand="true"
+      :expanded.sync="expanded"
+      item-key="key"
+      show-expand
+      hide-default-footer
+      :items-per-page="-1"
+      @update:expanded="onExpand"
+    >
+      <template v-slot:top>
+        <v-toolbar flat>
+          <v-toolbar-title>Журнал бактерицидных ламп</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <action-btn @click="addItem">Добавить замер</action-btn>
+          <modal-dialog :dialog="addDialog" title="Добавить замер">
+            <template v-slot:content>
+              <v-form
+                ref="addDialogForm"
+                v-model="addDialogIsValid"
+                lazy-validation
+              >
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <select-input
+                      v-model="editedItem.department"
+                      :items="selectableData.departments"
+                      item-text="name"
+                      item-value="@id"
+                      label="Отделение"
+                      :required="true"
+                      :rules="addDialogRules"
+                    ></select-input>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <select-input
+                      v-model="editedItem.room"
+                      :items="selectableData.roomIndastrials"
+                      item-text="name"
+                      item-value="@id"
+                      label="Помещение"
+                      :required="true"
+                      :rules="addDialogRules"
+                    ></select-input>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <select-input
+                      v-model="editedItem.lamp"
+                      :items="selectableData.lamps"
+                      item-text="name"
+                      item-value="@id"
+                      label="Лампа"
+                      :required="true"
+                      :rules="addDialogRules"
+                    ></select-input>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <date-input
+                      v-model="editedItem.fixedDate"
+                      label="Дата фиксации"
+                      :required="true"
+                      :rules="addDialogRules"
+                    ></date-input>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <time-input
+                      v-model="editedItem.timeStart"
+                      :date="editedItem.fixedDate"
+                      label="Время начала"
+                      :required="true"
+                      :rules="addDialogRules"
+                    ></time-input>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <time-input
+                      v-model="editedItem.timeEnd"
+                      :date="editedItem.fixedDate"
+                      label="Время окончания"
+                      :required="true"
+                      :rules="addDialogRules"
+                    ></time-input>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </template>
+            <template v-slot:controls>
+              <div>
+                <action-btn @click="close"> Отмена </action-btn>
+                <action-btn @click="save"> Сохранить </action-btn>
+                <action-btn @click="validateAddDialog"> валидация </action-btn>
+              </div>
+            </template>
+          </modal-dialog>
+          <modal-dialog :dialog="dialogDelete" max-width="400">
+            <template v-slot:content>
+              <v-row class="justify-center">
+                <span class="text-h5">Удалить запись?</span>
+              </v-row>
+            </template>
+            <template v-slot:controls>
+              <div>
+                <action-btn @click="closeDelete"> Отмена </action-btn>
+                <action-btn @click="deleteItemConfirm"> OK </action-btn>
+              </div>
+            </template>
+          </modal-dialog>
+        </v-toolbar>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
+        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </template>
+      <template v-slot:expanded-item="{ headers }">
+        <td :colspan="headers.length">
+          <h3>Информация</h3>
+          <br />
+          Всего часов: {{ expandedItemDetails.hours }}<br />
+          Включена: {{ expandedItemDetails.enabled ? "да" : "нет" }}<br />
+          Название прибора: {{ expandedItemDetails.name }}<br />
+          Помещение: {{ expandedItemDetails.roomName }}
+        </td>
+      </template>
+    </v-data-table>
+    <v-pagination
+      v-model="currentPage"
+      :length="totalPages"
+      @input="handlePageChange"
+    ></v-pagination>
+  </div>
 </template>
 
 <script>
@@ -116,6 +143,7 @@ import {
   getRooms,
   getRoomIndastrials,
   getDepartments,
+  postBactericidalLog,
 } from "@/api/bactericidalLog";
 import { ISODateTo } from "@/util/date";
 
@@ -125,11 +153,9 @@ export default {
   data() {
     return {
       logs: [],
-      lamps: [],
-      rooms: [],
-      roomIndastrials: [],
-      departments: [],
-      employees: [],
+      /*
+       * Два поля перестали быть доступны
+       */
       headers: [
         // {
         //   text: "Дата создания",
@@ -145,7 +171,6 @@ export default {
         // { text: "Дата обновления", value: "updatedAt" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-      items: [],
       expanded: [],
       addDialog: false,
       dialogDelete: false,
@@ -195,12 +220,81 @@ export default {
         name: "",
         roomName: "",
       },
+
+      addDialogIsValid: true,
+      addDialogRules: [(v) => !!v || "Поле обязательно"],
+
+      selectableData: {
+        lamps: [],
+        rooms: [],
+        departments: [],
+        roomIndastrials: [],
+        employees: [],
+      },
+
+      currentPage: 1,
+      totalPages: 55,
     };
   },
 
+  computed: {
+    items() {
+      return this.logs.map((log, index) => {
+        return {
+          key: index,
+          createdAt: ISODateTo(log.createdAt, "datetime"),
+          delta: log.delta,
+          fixedDate: ISODateTo(log.fixedDate, "date"),
+          timeStart: ISODateTo(log.timeStart, "time"),
+          timeEnd: ISODateTo(log.timeEnd, "time"),
+          total: log.total,
+          updatedAt: ISODateTo(log.updatedAt, "datetime"),
+          lamp: log.lamp,
+          room: log.room,
+        };
+      });
+    },
+
+    /*
+     * Нет полей, по которым можно фильтровать массивы
+     */
+    // filteredSelectableData() {
+    //   const lamps = this.selectableData.lamps;
+    //   const rooms = this.selectableData.rooms;
+    //   const departments = this.selectableData.departments;
+
+    //   const selectedDepartment = this.editedItem.department;
+    //   const selectedRoom = this.editedItem.room;
+    //   const selectedLamp = this.editedItem.lamp;
+
+    //   function filterDepartments() {
+    //     return departments;
+    //   }
+
+    //   function filterRooms() {
+    //     return rooms;
+    //   }
+
+    //   function filterLamps() {
+    //     return lamps;
+    //   }
+
+    //   return {
+    //     lamps: filterLamps(),
+    //     rooms: filterRooms(),
+    //     departments: filterDepartments(),
+    //   };
+    // },
+  },
+
   methods: {
-    async getData() {
-      const response = await getBactericidalLog();
+    async getData(page = 1) {
+      const response = await getBactericidalLog(page);
+      const lastPageURL = response.data["hydra:view"]["hydra:last"];
+      this.totalPages = +lastPageURL.slice(
+        lastPageURL.search(/=/) + 1,
+        lastPageURL.length
+      );
       this.logs = response.data["hydra:member"];
     },
 
@@ -227,10 +321,9 @@ export default {
 
     close() {
       this.addDialog = false;
-      this.$nextTick(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      });
+      this.editedItem = Object.assign({}, this.defaultItem);
+      this.editedIndex = -1;
+      this.$refs.addDialogForm.reset();
     },
 
     closeDelete() {
@@ -242,41 +335,33 @@ export default {
     },
 
     save() {
-      this.editedIndex > -1 ? this.saveChanges() : this.saveCreatedItem();
-      this.close();
+      this.editedIndex > -1 ? this.saveChanges() : this.postNewItem();
+      // this.close();
     },
 
     saveChanges() {
       Object.assign(this.items[this.editedIndex], this.editedItem);
     },
 
-    saveCreatedItem() {
-      this.editedItem.key = this.items.length;
-      this.items.push(this.editedItem);
-      this.postNewItem(this.editedItem);
-    },
-
-    postNewItem(item) {
-      console.log({
-        room: item.room,
-        fixedDate: item.fixedDate,
-        lamp: item.lamp,
-        timeStart: item.timeStart,
-        timeEnd: item.timeEnd,
-        total: 0,
-        responsible: "string",
-        department: item.department,
-      });
-      return {
-        room: item.room,
-        fixedDate: item.fixedDate,
-        lamp: item.lamp,
-        timeStart: item.timeStart,
-        timeEnd: item.timeEnd,
-        total: 0,
-        responsible: "string",
-        department: item.department,
-      };
+    async postNewItem() {
+      this.$refs.addDialogForm.validate();
+      await this.$nextTick();
+      if (this.addDialogIsValid) {
+        const { room, fixedDate, lamp, timeStart, timeEnd, department } =
+          this.editedItem;
+        const data = {
+          room,
+          fixedDate,
+          lamp,
+          timeStart,
+          timeEnd,
+          total: 0,
+          responsible: "/api/employees/75a2948c-918e-440e-9bad-ce3025e675b5",
+          department,
+        };
+        await postBactericidalLog(data);
+        this.close();
+      }
     },
 
     async onExpand(item) {
@@ -296,6 +381,16 @@ export default {
         roomName: room.name,
       };
     },
+
+    validateAddDialog() {
+      console.log(this.$refs.addDialogForm);
+      this.$refs.addDialogForm.validate();
+    },
+
+    async handlePageChange(value) {
+      this.currentPage = value;
+      await this.getData(value);
+    },
   },
 
   watch: {
@@ -309,28 +404,30 @@ export default {
 
   async created() {
     await this.getData();
-    this.lamps = await getLamps().then((r) => r.data["hydra:member"]);
-    this.rooms = await getRooms().then((r) => r.data["hydra:member"]);
-    this.roomIndastrials = await getRoomIndastrials().then(
+
+    this.selectableData.lamps = await getLamps().then(
       (r) => r.data["hydra:member"]
     );
-    this.departments = await getDepartments().then(
+
+    this.selectableData.departments = await getDepartments().then(
       (r) => r.data["hydra:member"]
     );
-    this.items = this.logs.map((log, index) => {
-      return {
-        key: index,
-        createdAt: ISODateTo(log.createdAt, "datetime"),
-        delta: log.delta,
-        fixedDate: ISODateTo(log.fixedDate, "date"),
-        timeStart: ISODateTo(log.timeStart, "time"),
-        timeEnd: ISODateTo(log.timeEnd, "time"),
-        total: log.total,
-        updatedAt: ISODateTo(log.updatedAt, "datetime"),
-        lamp: log.lamp,
-        room: log.room,
-      };
-    });
+
+    this.selectableData.roomIndastrials = await getRoomIndastrials().then(
+      (r) => r.data["hydra:member"]
+    );
+
+    /*
+     * Пока не включены в список rooms(?)
+     */
+    this.selectableData.rooms = await getRooms().then(
+      (r) => r.data["hydra:member"]
+    );
+
+    /*
+     * Нет метода для получения. Стоит заглушка.
+     */
+    // this.selectableData.employees = await getEmployees().then((r) => r.data["hydra:member"]);
   },
 };
 </script>
