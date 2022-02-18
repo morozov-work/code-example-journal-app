@@ -35,3 +35,7 @@ export function getEmployees(id = null) {
   const url = id ? `/api/employees/${id}` : "/api/employees";
   return axios.get(url);
 }
+
+export function postBactericidalLog(data) {
+  return axios.post("/api/bactericidal_logs", data);
+}
