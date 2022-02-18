@@ -1,0 +1,9 @@
+@import "@/styles/variables";
+
+.select-input {
+  border-radius: $border-radius-small;
+
+	&::-webkit-scrollbar { 
+    display: none; 
+	}
+}

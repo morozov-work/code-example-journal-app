@@ -11,10 +11,11 @@
         active-class="expansion-panel--active"
       >
         <v-expansion-panel
-          v-for="(panel, index) in panels"
+          v-for="(panel, index) in navigationPanels"
           :key="index"
           class="expansion-panel"
           style="background-color: #ffffff00 !important"
+          @click="selectPanel(panel.name)"
         >
           <v-expansion-panel-header
             color="primary"
@@ -23,12 +24,6 @@
             open="false"
             style="background-color: #ffffff00 !important"
           >
-            <!-- class="expansion-panel__header freeze-height" -->
-            <!-- :class="
-            index
-              ? 'expansion-panel__header'
-              : 'expansion-panel__header freeze-height'
-          " -->
             <v-row class="panel-header__row" align="center">
               <component :is="panel.icon" class="panel-header__icon" />
               <transition name="fade">
@@ -56,7 +51,7 @@
               <v-list-item-group v-model="activeJournalIndex">
                 <v-list-item
                   color="purple"
-                  v-for="(item, index) in panelsContent"
+                  v-for="(item, index) in panelsContent[panel.name]"
                   :key="index"
                   active-class="journal--active"
                   class="journal"
@@ -65,7 +60,7 @@
                     <active-journal-pointer
                       class="journal-header__active-journal-pointer"
                     />
-                    <span>{{ item }}</span>
+                    <span>{{ item.title }}</span>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -78,15 +73,15 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import { navigation } from "@/util/constants";
 
-import MainIcon from "@/assets/icons/navigation/main.svg";
+import HomeIcon from "@/assets/icons/navigation/main.svg";
 import JournalsIcon from "@/assets/icons/navigation/journals.svg";
 import OrganizationsIcon from "@/assets/icons/navigation/organizations.svg";
 import UsersIcon from "@/assets/icons/navigation/users.svg";
 import NotificationsIcon from "@/assets/icons/navigation/notifications.svg";
-import CheckoutIcon from "@/assets/icons/navigation/checkout.svg";
+import DebuggingIcon from "@/assets/icons/navigation/checkout.svg";
 import ChevronDown from "@/assets/icons/navigation/chevron-down.svg";
 import ActiveJournalPointer from "@/assets/icons/navigation/active-journal-pointer.svg";
 
@@ -96,12 +91,12 @@ export default {
   name: "navigation-list",
 
   components: {
-    MainIcon,
+    HomeIcon,
     JournalsIcon,
     OrganizationsIcon,
     UsersIcon,
     NotificationsIcon,
-    CheckoutIcon,
+    DebuggingIcon,
     ChevronDown,
     ActiveJournalPointer,
   },
@@ -110,29 +105,6 @@ export default {
     activePanelIndex: undefined,
     activeJournalIndex: undefined,
     showHeaders: navigation.defaultState,
-    panels: [
-      { title: "Главная", icon: "MainIcon" },
-      { title: "Журналы", icon: "JournalsIcon" },
-      { title: "Организации", icon: "OrganizationsIcon" },
-      { title: "Пользователи", icon: "UsersIcon" },
-      { title: "Оповещения", icon: "NotificationsIcon" },
-      { title: "Отладка", icon: "CheckoutIcon" },
-    ],
-    panelsContent: [
-      "Температура и влажность помещения",
-      "Температура сотрудников",
-      "Дезинсекция и дератизация",
-      "Дезинфицирующие средства и дезинфекционные работы",
-      "Скоропортящаяся пищевая продукция",
-      "Температурный режим холодильного оборудования",
-      "Температура и влажность склада",
-      "Дефростация продуктов",
-      "Фритюрные жиры",
-      "Бракеражный журнал",
-      "Гигиенический журнал здоровья",
-      "Бактерицидная установка",
-      "Генеральные уборки",
-    ],
   }),
 
   computed: {
@@ -140,13 +112,29 @@ export default {
       isNavigationExpanded: ["GET_NAVIGATION_EXPANDED"],
     }),
 
+    ...mapGetters("navigation", {
+      navigationPanels: ["GET_NAVIGATION_PANELS_LIST"],
+    }),
+
+    panelsContent() {
+      const content = {};
+      this.navigationPanels.forEach((panel) => {
+        const data =
+          this.$store.getters[
+            `${panel.name.toLowerCase()}/GET_${panel.name.toUpperCase()}_ITEMS_LIST`
+          ];
+        content[panel.name] = Array.from(data);
+      });
+      return content;
+    },
+
     activePanel() {
       if (
         !this.isNavigationExpanded ||
         (!this.activePanelIndex && this.activePanelIndex !== 0)
       )
         return;
-      return this.panels[this.activePanelIndex].title;
+      return this.navigationPanels[this.activePanelIndex].name;
     },
 
     activeJournal() {
@@ -155,16 +143,15 @@ export default {
         (!this.activeJournalIndex && this.activeJournalIndex !== 0)
       )
         return;
-      return this.panelsContent[this.activeJournalIndex];
+      return this.panelsContent[this.activePanel][this.activeJournalIndex].name;
     },
   },
 
   methods: {
-    ...mapActions("navigation", ["SET_NAVIGATION_ACTIVE_PANEL"]),
-    ...mapActions("navigation", ["SET_NAVIGATION_ACTIVE_JOURNAL"]),
+    selectPanel(name) {
+      this.$router.push({ name });
+    },
   },
-
-  mounted() {},
 
   watch: {
     isNavigationExpanded(newVal, oldVal) {
@@ -180,11 +167,11 @@ export default {
     },
 
     activePanel(newVal) {
-      this["SET_NAVIGATION_ACTIVE_PANEL"](newVal);
+      this.$store.commit("navigation/SET_NAVIGATION_ACTIVE_PANEL", newVal);
     },
 
     activeJournal(newVal) {
-      this["SET_NAVIGATION_ACTIVE_JOURNAL"](newVal);
+      this.$store.commit("navigation/SET_NAVIGATION_ACTIVE_JOURNAL", newVal);
     },
   },
 };

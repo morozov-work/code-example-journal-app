@@ -4,22 +4,17 @@
     class="icon-btn"
     @mouseover="mouseOver"
     @mouseleave="mouseLeave"
+    @click.stop="$emit('click')"
   >
     <slot name="content"></slot>
-    <pop-up :content="popUpContent" v-show="showPopUp && popUpContent" />
+    <pop-up :content="popUpContent" v-if="showPopUp && popUpContent" />
   </v-btn>
 </template>
 
 <script>
-import PopUp from "@/components/controls/PopUp/PopUp.vue";
-
 import "./IconBtn.scss";
 
 export default {
-  components: {
-    PopUp,
-  },
-
   name: "icon-btn",
   props: {
     popUpContent: String,

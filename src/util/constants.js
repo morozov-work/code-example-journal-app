@@ -1,16 +1,20 @@
 const navigation = Object.freeze({
   expandedWidth: "271px",
+  expandedWidthMobile: "100%",
   collapsedWidth: "56px",
+  collapsedWidthMobile: "0px",
   defaultState: false, // Expanded
 });
 
 const breakpoints = Object.freeze({
   xs: "600", //phone
-  sm: "960", //tablet
-  md: "1264", //laptop*
-  lg: "1904", //desktop*
+  sm: "768", //tablet
+  md: "1024", //laptop*
+  lg: "1440", //desktop*
 });
 
-//* -16px on desktop for browser scrollbar
+// * -16px on desktop for browser scrollbar
 
-export { navigation, breakpoints };
+const AUTH_TOKEN_NAME = "jr_access_token";
+
+export { navigation, breakpoints, AUTH_TOKEN_NAME };

@@ -1,0 +1,17 @@
+@import "@/styles/variables";
+
+.modal-dialog {
+  border-radius: $border-radius-root;
+
+	@media (max-width: $phone) {
+		border-radius: $border-radius-phone;
+	}
+
+	&__card {
+		border-radius: $border-radius-root;
+
+		@media (max-width: $phone) {
+			border-radius: $border-radius-phone;
+		}
+	}
+}

@@ -1,0 +1,17 @@
+@import '@/styles/variables';
+
+.toolbar-btn {
+	margin-left: 40px !important;
+
+	@media (max-width: $laptop) {
+		margin-left: 20px !important;
+	}
+
+  &__content {
+		margin-left: 10px;
+
+		@media (max-width: $laptop) {
+			margin-left: 5px;
+		}
+	}
+}

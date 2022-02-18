@@ -1,4 +1,12 @@
 .journal-card {
+  &__title {
+    cursor: pointer;
+  }
+
+  &__content {
+    cursor: pointer;
+  }
+
   &__table-cell {
     border-bottom: 1px solid #f4f4f4 !important;
     padding: 0 !important;
