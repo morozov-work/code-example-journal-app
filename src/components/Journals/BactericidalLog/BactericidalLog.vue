@@ -93,7 +93,6 @@
               <div>
                 <action-btn @click="close"> Отмена </action-btn>
                 <action-btn @click="save"> Сохранить </action-btn>
-                <action-btn @click="validateAddDialog"> валидация </action-btn>
               </div>
             </template>
           </modal-dialog>
@@ -380,11 +379,6 @@ export default {
         name: lamp.name,
         roomName: room.name,
       };
-    },
-
-    validateAddDialog() {
-      console.log(this.$refs.addDialogForm);
-      this.$refs.addDialogForm.validate();
     },
 
     async handlePageChange(value) {
