@@ -36,7 +36,6 @@ export default {
     },
     value: {
       type: String,
-      required: true,
     },
     required: {
       type: Boolean,
@@ -73,11 +72,11 @@ export default {
 
   methods: {
     dateFormatted(date) {
-      return date.slice(0, 10);
+      return date ? date.slice(0, 10) : "";
     },
 
     ISODate(date) {
-      return new Date(Date.parse(date)).toISOString();
+      return date ? new Date(Date.parse(date)).toISOString() : "";
     },
   },
 };
