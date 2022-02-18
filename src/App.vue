@@ -5,6 +5,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { findDeviceType } from "@/util/utils";
+import { checkToken } from "@/api/auth";
 
 export default {
   name: "App",
@@ -29,8 +30,18 @@ export default {
     },
   },
 
+  async beforeMount() {
+    try {
+      this.$store.commit("auth/SET_IS_TOKEN_CHECKED");
+      await checkToken();
+      this.$store.commit("auth/SET_AUTH_USER", true);
+      this.$router.push({ name: this.$route.name });
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   mounted() {
-    // if (!this.$store.state.auth.AUTH) this.$router.push("/login");
     window.addEventListener("resize", this.onResize);
   },
 

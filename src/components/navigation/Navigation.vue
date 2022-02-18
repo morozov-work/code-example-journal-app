@@ -1,19 +1,21 @@
 <template>
   <v-navigation-drawer
-    v-show="!isTablet"
     :mini-variant="!isNavigationExpanded"
     :mini-variant-width="collapsedWidth"
-    :width="expandedWidth"
+    :width="navigationWidth"
+    :height="navigationHeight"
     color="primary"
-    expand-on-hover
+    :expand-on-hover="!isPhone"
     disable-resize-watcher
     mobile-breakpoint="0"
     hide-overlay
     permanent
+    :clipped="isPhone"
     app
     ref="drawer"
     @mouseenter.native="onMouseEnter"
     @mouseleave.native="onMouseLeave"
+    @update:mini-variant="onUpdateMiniVariant"
   >
     <div class="navigation-wrapper" ref="wrapper">
       <navigation-user-menu />
@@ -58,22 +60,50 @@ export default {
       deviceType: ["GET_DEVICE_TYPE"],
     }),
 
-    isTablet() {
-      return this.deviceType === "tablet" || this.deviceType === "phone";
+    isPhone() {
+      return this.deviceType === "phone";
     },
 
-    expandedWidth: () => navigationSettings.expandedWidth,
+    expandedWidth() {
+      return this.isPhone
+        ? navigationSettings.expandedWidthMobile
+        : navigationSettings.expandedWidth;
+    },
 
-    collapsedWidth: () => navigationSettings.collapsedWidth,
+    collapsedWidth() {
+      return this.isPhone
+        ? navigationSettings.collapsedWidthMobile
+        : navigationSettings.collapsedWidth;
+    },
+
+    navigationWidth() {
+      return this.isNavigationExpanded
+        ? this.expandedWidth
+        : this.collapsedWidth;
+    },
+
+    navigationHeight() {
+      return "100%";
+    },
   },
 
   methods: {
     onMouseEnter() {
-      this.$store.commit("common/SET_NAVIGATION_EXPANDED");
+      if (!this.isPhone) {
+        this.$store.commit("common/SET_NAVIGATION_EXPANDED");
+      }
     },
 
     onMouseLeave() {
-      this.$store.commit("common/SET_NAVIGATION_COLLAPSED");
+      if (!this.isPhone) {
+        this.$store.commit("common/SET_NAVIGATION_COLLAPSED");
+      }
+    },
+
+    onUpdateMiniVariant(isCollapsed) {
+      if (isCollapsed) {
+        this.$store.commit("common/SET_NAVIGATION_COLLAPSED");
+      }
     },
   },
 

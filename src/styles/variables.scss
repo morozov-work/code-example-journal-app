@@ -6,6 +6,23 @@
 //   font-weight: normal;
 // }
 
+// custom breakpoints
+$phone: "600px"; // xs
+$tablet: "768px"; // sm
+$laptop: "1024px - 16px"; // md*
+$desktop: "1440px - 16px"; // lg*
+// * -16px on desktop for browser scrollbar
+
+// vuetify breakpoints
+$grid-breakpoints: (
+  'xs': 0,
+  'sm': 600px,
+  'md': 768px,
+  'lg': 1024px - 16px,
+  'xl': 1440px - 16px
+);
+
+// common
 $body-font-family: "Raleway", sans-serif;
 $heading-font-family: "Raleway", sans-serif;
 $font-size-root: 14px;
@@ -30,15 +47,22 @@ $gray-light:    #F4F4F4 !important;
 
 // border-radius
 $border-radius-root: 25px;
+$border-radius-phone: 15px !important; // custom
+$border-radius-small: 15px !important; // custom
+
 $rounded: (
+  0: 0,
   'sm': 15px,
+  null: $border-radius-root,
+  'pill': 9999px,
+  'circle': 50%
 );
 
 // shadow
 $box-shadow-root: 0px 4px 20px rgba(0, 0, 0, 0.1) !important; //custom
 
 // v-btn
-$btn-border-radius: none;
+$btn-border-radius: 0;
 
 // v-text-field
 $text-field-border-radius: 8px;

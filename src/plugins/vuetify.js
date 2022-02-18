@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuetify, { VBtn, VCheckbox } from "vuetify/lib";
+import ru from "vuetify/lib/locale/ru";
 
 Vue.use(Vuetify);
 
@@ -25,6 +26,22 @@ export default new Vuetify({
       },
     },
   },
+
+  breakpoint: {
+    thresholds: {
+      xs: 600,
+      sm: 768,
+      md: 1024,
+      lg: 1440,
+    },
+    scrollBarWidth: 16,
+  },
+
+  lang: {
+    locales: { ru },
+    current: "ru",
+  },
+
   global: {
     ripple: false,
   },

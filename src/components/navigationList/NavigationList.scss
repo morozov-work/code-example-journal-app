@@ -48,10 +48,10 @@
 
   .panel-header__row {
     line-height: 1rem;
+    flex-wrap: nowrap;
   }
 
   .panel-header__icon {
-    // margin: 0 16px 0 0;
     margin-left: 4px;
   }
 

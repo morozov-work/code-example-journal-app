@@ -1,3 +1,5 @@
+@import "@/styles/variables";
+
 .navigation-wrapper {
   min-height: 100%;
   display: flex;
@@ -31,3 +33,11 @@
 //   background-color: #EA5409 !important;
 //   width: 2px !important;
 // }
+
+@media (max-width: $phone) {
+  .v-navigation-drawer__content::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0;
+    background: transparent;
+  }
+}
