@@ -27,8 +27,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { navigation as navigationSettings } from "@/util/constants";
-import { ScrollWatcher } from "@/util/scrollWatcher";
+import { navigation as navigationSettings } from "@/utils/constants";
+import { ScrollWatcher } from "@/utils/scrollWatcher";
 
 import NavigationList from "@/components/NavigationList/NavigationList.vue";
 import NavigationUserMenu from "@/components/NavigationUserMenu/NavigationUserMenu.vue";

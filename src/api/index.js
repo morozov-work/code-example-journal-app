@@ -1,8 +1,7 @@
 import * as _axios from "axios";
 import store from "@/store";
 import router from "@/router";
-import { getCookie } from "@/util/cookie";
-import { AUTH_TOKEN_NAME } from "@/util/constants";
+import { auth } from "@/utils/auth";
 
 const API_BASE_URL = "https://sjr.asap.dev03.spark-integration.ru";
 
@@ -16,8 +15,8 @@ const errorHandler = (error) => {
 
 axios.interceptors.request.use((config) => {
   const isAuthorized = store.getters["auth/GET_AUTH_USER"];
-  const AUTH_TOKEN = getCookie(AUTH_TOKEN_NAME);
-
+  const AUTH_TOKEN = auth.getToken();
+  // console.log(AUTH_TOKEN || "token not found");
   if (AUTH_TOKEN && isAuthorized) {
     config.headers["Authorization"] = "Bearer " + AUTH_TOKEN;
   }

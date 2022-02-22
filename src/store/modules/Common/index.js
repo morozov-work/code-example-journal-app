@@ -1,5 +1,5 @@
-import { navigation as navigationConstants } from "@/util/constants";
-import { calcViewportShift, findDeviceType } from "@/util/utils";
+import { navigation as navigationConstants } from "@/utils/constants";
+import { calcViewportShift, findDeviceType } from "@/utils";
 
 const { expandedWidth: expandedShift, collapsedWidth: collapsedShift } =
   navigationConstants;

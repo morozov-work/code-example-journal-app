@@ -74,7 +74,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { navigation } from "@/util/constants";
+import { navigation } from "@/utils/constants";
 
 import HomeIcon from "@/assets/icons/navigation/main.svg";
 import JournalsIcon from "@/assets/icons/navigation/journals.svg";

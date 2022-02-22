@@ -29,7 +29,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { navigation } from "@/util/constants";
+import { navigation } from "@/utils/constants";
 
 import UserIcon from "@/assets/icons/navigation/user-icon.svg";
 import ChevronDown from "@/assets/icons/navigation/chevron-down.svg";

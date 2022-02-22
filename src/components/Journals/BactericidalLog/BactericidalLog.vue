@@ -144,7 +144,7 @@ import {
   getDepartments,
   postBactericidalLog,
 } from "@/api/bactericidalLog";
-import { ISODateTo } from "@/util/date";
+import { ISODateTo } from "@/utils/date";
 
 export default {
   name: "bactericidal-log",

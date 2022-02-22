@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import { auth } from "@/util/auth";
+import { auth } from "@/utils/auth";
 
 import Login from "@/views/Login.vue";
 import Register from "@/views/Register.vue";

@@ -7,7 +7,7 @@ import { registerGlobalComponents } from "./global";
 import vuetify from "./plugins/vuetify";
 import axios from "axios";
 import VueAxios from "vue-axios";
-import { auth } from "@/util/auth";
+import { auth } from "@/utils/auth";
 
 Vue.config.productionTip = false;
 

@@ -1,6 +1,5 @@
 import { axios } from ".";
-import { getCookie } from "@/util/cookie";
-import { AUTH_TOKEN_NAME } from "@/util/constants";
+import { auth } from "@/utils/auth";
 
 const urls = Object.freeze({
   API_LOGIN_URL: "/api_user_authenticate", // method: "POST"
@@ -36,7 +35,7 @@ export function registration(user) {
 }
 
 export function checkToken() {
-  const AUTH_TOKEN = getCookie(AUTH_TOKEN_NAME);
+  const AUTH_TOKEN = auth.getToken();
   const config = {
     headers: {
       Authorization: `Bearer ${AUTH_TOKEN}`,

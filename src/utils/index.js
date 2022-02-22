@@ -1,7 +1,7 @@
 import {
   navigation as navigationConstants,
   breakpoints,
-} from "@/util/constants";
+} from "@/utils/constants";
 
 const {
   defaultState,

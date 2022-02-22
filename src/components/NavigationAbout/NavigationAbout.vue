@@ -36,7 +36,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { navigation } from "@/util/constants";
+import { navigation } from "@/utils/constants";
 
 import SparkLogo from "@/assets/icons/navigation/spark-logo.svg";
 import AboutLocation from "@/assets/icons/navigation/about-location.svg";

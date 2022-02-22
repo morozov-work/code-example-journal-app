@@ -4,7 +4,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { findDeviceType } from "@/util/utils";
+import { findDeviceType } from "@/utils";
 import { checkToken } from "@/api/auth";
 
 export default {
