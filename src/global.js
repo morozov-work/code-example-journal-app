@@ -9,6 +9,8 @@ const components = {
     import("@/components/controls/SelectInput/SelectInput.vue"),
   PopUp: () => import("@/components/controls/PopUp/PopUp.vue"),
   ModalDialog: () => import("@/components/ModalDialog/ModalDialog.vue"),
+
+  BarcodeScanner: () => import("@/views/BarcodeScanner/BarcodeScanner.vue"),
 };
 
 export function registerGlobalComponents() {

@@ -1,0 +1,26 @@
+.scanner {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100vw;
+		height: 100vh;
+
+	&__pointer {
+		width: 70vw;
+		height: 70vw;
+		border: 2px solid white;
+		border-radius: 15px;
+	}
+
+	&__controls {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding-bottom: 50px;
+	}
+}
+

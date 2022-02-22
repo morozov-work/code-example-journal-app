@@ -17,6 +17,8 @@ import Users from "@/views/Users/Users.vue";
 import Notifications from "@/views/Notifications/Notifications.vue";
 import Debugging from "@/views/Debugging/Debugging.vue";
 
+import BarcodeScanner from "@/views/BarcodeScanner/BarcodeScanner.vue";
+
 import Journal from "@/components/Journal/Journal.vue";
 
 Vue.use(VueRouter);
@@ -98,6 +100,12 @@ const routes = [
         meta: { requiresAuth: true },
       },
     ],
+  },
+
+  {
+    path: "/barcode-scanner",
+    name: "scanner",
+    component: BarcodeScanner,
   },
 ];
 
