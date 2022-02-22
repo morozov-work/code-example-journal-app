@@ -232,7 +232,7 @@ export default {
       },
 
       currentPage: 1,
-      totalPages: 55,
+      totalPages: 1,
     };
   },
 
@@ -410,6 +410,11 @@ export default {
     this.selectableData.roomIndastrials = await getRoomIndastrials().then(
       (r) => r.data["hydra:member"]
     );
+
+    // const d = await getDepartments("6a6df0fe-fd1d-43f5-a1e9-65a219f0c0f6");
+    // const l = await getLamps("b9833d90-f78b-4a01-8e07-c4caede9ebcf");
+    // const r = await getRoomIndastrials("7f722c7b-b585-4d42-8151-0a138fd5b79e");
+    // console.log(d, l, r);
 
     /*
      * Пока не включены в список rooms(?)
